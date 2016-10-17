@@ -1,0 +1,112 @@
+<resources>
+    <string name="app_name">El Donante</string>
+    <string name="action_settings">Settings</string>
+    <string name="Acerca_de">Acerca de</string>
+    <string name="Acerca_de_full">Aplicacion hecha por :\n Tomas J. Casas Rodriguez
+            \nDanny Julca
+            \nEstudiantes de Ciencias de la Computacion
+            \nDe la Universidad Nacional de Ingeneria
+            \nPara el curso : PROGRAMACIÓN EN DISPOSITIVOS MÓVILES</string>
+    <string name="Configuracion">Configuración</string>
+    <string name="Salir">Salir</string>
+    <string name="TipoDeSangre">Tipo De Sangre : </string>
+
+    <string name="distritos_prompt">distritos</string>
+    <string name="TipoDeSangre_prompt">TipoDeSangre</string>
+
+    <string name="title_activity_configuracion">Configuracion</string>
+    <string name="title_activity_registrarse">Registrarse</string>
+    <string name="title_activity_hospitales">Hospitales</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_compatibilidad">Compatibilidad</string>
+    <string name="title_activity_buscar_donantes">Buscar Donantes</string>
+    <string name="title_activity_mapa_hospitales">Mapa Hospitales</string>
+    <string name="title_activity_acercade">Acerca de</string>
+
+    <string name="add_button">Añadir</string>
+    <string name="update_button">Actualizar</string>
+    <string name="delete_button">borrar</string>
+    <string name="fab">Añadir Amigo</string>
+    <string name="title_activity_transition_edit">Editar Nombre Activity</string>
+    <string name="title_activity_transition_add">Añadir Nombre Activity</string>
+
+    <string name="LetraTamano">13dp</string>
+
+    <string name="title_activity_buscar_donante">Buscar Donante </string>
+    <string name="title_activity_main">Inicio</string>
+
+    <string name="boton1">Buscar Donante</string>
+    <string name="boton2">Disponibilidad</string>
+    <string name="boton3">Conversar</string>
+    <string name="boton4">Mensaje</string>
+    <string name="boton5">Geolocalizar</string>
+    <string name="boton6">Usuario Seleccionado</string>
+
+    <string name="mail">jdcasasmoviles@gmail.com</string>
+    <string name="subject">AsuntoPrueba</string>
+    <string name="envio">MuyBuenas</string>
+    <string name="text">Comparte mi mensaje</string>
+
+
+    <string-array name="names_array">
+        <item>Miguel</item>
+        <item>Juliana</item>
+        <item>Cristobal</item>
+        <item>Amy</item>
+        <item>Jason</item>
+        <item>Melissa</item>
+        <item>David</item>
+        <item>Michelle</item>
+        <item>James</item>
+        <item>Kimberly</item>
+        <item>Juan</item>
+        <item>Lisa</item>
+        <item>Roberto</item>
+        <item>Ángela</item>
+        <item>Brian</item>
+        <item>Emilio</item>
+        <item>Bárbara</item>
+        <item>Estefanía</item>
+        <item>Mateo</item>
+        <item>Nicole</item>
+        <item>José</item>
+        <item>Jessica</item>
+        <item>Daniel</item>
+        <item>Elizabeth</item>
+        <item>Kevin</item>
+        <item>Rebeca</item>
+        <item>Enrique</item>
+        <item>Kelly</item>
+        <item>Jeffrey</item>
+        <item>Mary</item>
+        <item>Ricardo</item>
+        <item>Christina</item>
+        <item>Scott</item>
+        <item>Amanda</item>
+        <item>Mark</item>
+        <item>Julie</item>
+        <item>Tomás</item>
+        <item>Laura</item>
+        <item>Tadeo</item>
+        <item>Shannon</item>
+        <item>Anthony</item>
+        <item>Christine</item>
+        <item>Carlos</item>
+        <item>Tamara</item>
+        <item>Joshua</item>
+        <item>Tracy</item>
+        <item>Ryan</item>
+        <item>Karen</item>
+        <item>Jeremy</item>
+        <item>Daniel</item>
+    </string-array>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_buscar_donante_r">BuscarDonanteR</string>
+    <string name="title_activity_conversar">Conversar</string>
+    <string name="title_activity_disponibilidad">Disponibilidad</string>
+    <string name="title_activity_geolocalizar">Geolocalizar</string>
+    <string name="title_activity_mensaje">Mensaje</string>
+    <string name="title_activity_usuario_seleccionado">UsuarioSeleccionado</string>
+
+
+</resources>

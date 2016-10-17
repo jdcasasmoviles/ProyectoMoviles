@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="distritos_lima">
+        <item>San Martin de Porres</item>
+        <item>Comas</item>
+        <item>Molina</item>
+        <item>Ate</item>
+        <item>Independencia</item>
+    </string-array>
+
+</resources>

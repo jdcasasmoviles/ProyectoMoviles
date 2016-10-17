@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.jdcasas.appeldonante">
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <uses-permission android:name="android.permission.CALL_PHONE" />
+        <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+        <uses-permission android:name="android.permission.CAMERA" />
+        <uses-permission android:name="android.permission.INTERNET" />
+        <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+        <uses-feature android:name="android.hardware.camera" android:required="false" />
+        <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ConfiguracionActivity"
+            android:label="@string/title_activity_configuracion"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".RegistrarseActivity"
+            android:label="@string/title_activity_registrarse"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".HospitalesActivity"
+            android:label="@string/title_activity_hospitales"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_login"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CompatibilidadActivity"
+            android:label="@string/title_activity_compatibilidad"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".BuscarDonantesActivity"
+            android:label="@string/title_activity_buscar_donantes"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MapaHospitalesActivity"
+            android:label="@string/title_activity_mapa_hospitales"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AcercadeActivity"
+            android:label="@string/title_activity_acercade"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".TransitionEditActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/title_activity_transition_edit"
+            android:parentActivityName=".SampleMaterialActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".SampleMaterialActivity" />
+        </activity>
+        <activity
+            android:name=".TransitionAddActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/title_activity_transition_add"
+            android:parentActivityName=".SampleMaterialActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".SampleMaterialActivity" />
+        </activity>
+        <activity
+            android:name=".Main2Activity"
+            android:label="@string/title_activity_main2"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".BuscarDonanteR"
+            android:label="@string/title_activity_buscar_donante_r"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Conversar"
+            android:label="@string/title_activity_conversar"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Disponibilidad"
+            android:label="@string/title_activity_disponibilidad"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Geolocalizar"
+            android:label="@string/title_activity_geolocalizar"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Mensaje"
+            android:label="@string/title_activity_mensaje"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".UsuarioSeleccionado"
+            android:label="@string/title_activity_usuario_seleccionado"
+            android:theme="@style/AppTheme.NoActionBar" />
+    </application>
+
+</manifest>

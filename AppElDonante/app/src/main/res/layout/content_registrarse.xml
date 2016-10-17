@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#797272"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.jdcasas.appeldonante.RegistrarseActivity"
+    tools:showIn="@layout/activity_registrarse">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView8" >
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Formulario de registro"
+                android:layout_weight="2"
+                android:textAlignment="center"
+                android:textSize="20dp"
+                android:id="@+id/textView0"
+                android:layout_gravity="center"
+                android:textColor="#0b3be6" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/android_normal"
+                android:id="@+id/imageButton"
+                android:background="@drawable/android_button"
+                />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Nombres :"
+                android:id="@+id/textViewNombres"
+                android:textColor="#ffffff" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editTextNombres"
+                android:textColor="#100b0b"
+                android:background="#f1f6f2"
+                android:text="" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Apellidos :"
+                android:id="@+id/textViewApellidos"
+                android:textColor="#ffffff" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editTextApellidos"
+                android:textColor="#100b0b"
+                android:background="#f1f6f2"
+                android:text="" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Sexo :"
+                android:id="@+id/textViewSexo"
+                android:textColor="#ffffff" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Masculino"
+                android:id="@+id/radioButton"
+                android:textColor="#ffffff"
+                android:buttonTint="#06e23a"
+                android:onClick="radioClick"
+                android:background="#797272" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Femenino"
+                android:id="@+id/radioButton2"
+                android:textColor="#ffffff"
+                android:buttonTint="#0ce622"
+                android:onClick="radioClick"
+                android:background="#797272" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Dni :"
+                android:id="@+id/textViewDni"
+                android:textColor="#ffffff" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editTextDni"
+                android:textColor="#100b0b"
+                android:background="#f1f6f2"
+                android:text="" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Tipo de sangre :"
+                android:id="@+id/textViewTipoSangre"
+                android:textColor="#ffffff" />
+            <Spinner
+                android:id="@+id/sp_TipoDeSangre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:prompt="@string/TipoDeSangre_prompt"
+                android:background="#949290"
+                android:spinnerMode="dropdown" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Coordenadas actuales de ubicacion :"
+                android:id="@+id/textViewCoordenadas"
+                android:textColor="#0b3be6" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Coor. latitud :"
+                android:id="@+id/textViewCoordenadaslatitud"
+                android:textColor="#ffffff" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editTextCoorX"
+                android:textColor="#100b0b"
+                android:background="#f1f6f2"
+                android:text="" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Coor. longitud :"
+                android:id="@+id/textViewCoordenadaslongitud"
+                android:textColor="#ffffff" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editTextCoorY"
+                android:textColor="#100b0b"
+                android:background="#f1f6f2"
+                android:text="" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Automatico"
+                android:id="@+id/ButtonAutomatico"
+                android:layout_gravity="right"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Direccion :"
+                android:id="@+id/textViewDireccion"
+                android:textColor="#ffffff" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editTextDireccion"
+                android:textColor="#100b0b"
+                android:background="#f1f6f2"
+                android:text="" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Telefono :"
+                android:id="@+id/textViewTelefono"
+                android:textColor="#ffffff" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editTextTelefono"
+                android:textColor="#100b0b"
+                android:background="#f1f6f2"
+                android:text="" />
+
+
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quieres donar"
+                android:id="@+id/checkBox"
+                android:textColor="#ffffff"
+                android:buttonTint="#0ec21a"
+                android:background="#FF797272"
+                android:onClick="checkBoxClick"/>
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Registrar"
+            android:id="@+id/ButtonRegistrarse"
+            android:layout_gravity="left"
+             />
+        </LinearLayout>
+
+    </ScrollView>
+</RelativeLayout>
