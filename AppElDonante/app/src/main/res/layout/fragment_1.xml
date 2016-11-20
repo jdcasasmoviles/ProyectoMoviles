@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    class="com.jdcasas.appeldonante.Fragment1"
+    tools:context="net.sgoliver.android.toolbar.Fragment1">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+       >
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:weightSum="1">
+                <TextView
+                    android:id="@+id/textViewDistritos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Distrito  :   "
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:textColor="#2455d2"
+                    android:textSize="20dp"
+                    android:layout_weight="0.5" />
+
+                <Spinner
+                    android:id="@+id/sp_distrito"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:prompt="@string/distritos_prompt"
+                    android:textColor="#ffffff"
+                    android:background="#a9e2ef"
+                    android:spinnerMode="dialog"
+                    android:layout_weight="0.5"
+                    android:backgroundTint="#ffffff" />
+        </LinearLayout>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/imageView"
+            android:src="@drawable/geohd"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="15dip"
+            android:layout_marginTop="15dip"/>
+    </LinearLayout>
+</FrameLayout>
+
+

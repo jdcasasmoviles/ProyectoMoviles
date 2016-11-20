@@ -22,12 +22,25 @@
         android:gravity="left">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Estado de donanción:"
-            android:id="@+id/texto1"
+            android:textAlignment="center"
+            android:textSize="18dp"
+            android:id="@+id/textView0"
             android:layout_gravity="center_horizontal"
-            android:textSize="30dp" />
+            android:background="#0b3be6"
+            android:textColor="#ffffff" />
+        <ImageView
+            android:src="@drawable/android3"
+            android:id="@+id/img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            >
+        </ImageView>
 
 
         <RadioGroup
@@ -46,13 +59,15 @@
                 android:text="No Disponible"
                 android:id="@+id/radioButton2"
                 android:layout_gravity="left" />
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sin Elección"
-                android:id="@+id/radioButton3"
-                android:layout_gravity="left" />
         </RadioGroup>
+        <ImageView
+            android:layout_width="111dp"
+            android:layout_height="157dp"
+            android:id="@+id/imageViewDisponibilidad"
+            android:src="@drawable/android_pressed"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal" />
 
     </LinearLayout>
 

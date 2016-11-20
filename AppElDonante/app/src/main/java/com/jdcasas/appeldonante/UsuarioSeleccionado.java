@@ -1,67 +1,176 @@
 package com.jdcasas.appeldonante;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Random;
+
 public class UsuarioSeleccionado extends AppCompatActivity {
+    DrawerLayout drawerLayout;
+    Toolbar toolbar;
+    ActionBar actionBar;
+    TextView textView;
+    String usuario;
+    private int[] colors;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_usuario_seleccionado);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //add
-        Button boton3,boton4,boton5;
-        boton3=(Button)findViewById(R.id.button);
-        boton3.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                Intent intent=new Intent(UsuarioSeleccionado.this,Conversar.class);
-                startActivity(intent);
-            }
-        });
-        boton4=(Button)findViewById(R.id.button2);
-        boton4.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                Intent intent=new Intent(UsuarioSeleccionado.this,Mensaje.class);
-                startActivity(intent);
-            }
-        });
-        boton5=(Button)findViewById(R.id.button3);
-        boton5.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                Intent intent=new Intent(UsuarioSeleccionado.this,Geolocalizar.class);
-                startActivity(intent);
-            }
-        });
-        //fin add
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        actionBar = getSupportActionBar();
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        drawerLayout = (DrawerLayout)
+                findViewById(R.id.navigation_drawer);
+        NavigationView navigationView = (NavigationView)
+                findViewById(R.id.navigation_view);
+        if (navigationView != null) {
+            setupNavigation(navigationView);
+        }
+        setupNavigation(navigationView);
+
+        //PROCESO PARA OBTENER EL NOMBRE DE USUARIO
+        Bundle extras = getIntent().getExtras();
+        //Obtenemos datos enviados en el intent.
+        if (extras != null) usuario = extras.getString("usuario");//usuario
+        else usuario = "error";
+        TextView txt_usr = (TextView) findViewById(R.id.textViewLetraPersonal);
+        Random rnd = new Random();
+        int i=(int)(rnd.nextDouble() * 50);
+        colors = getResources().getIntArray(R.array.initial_colors);
+        txt_usr.setBackgroundColor(colors[i]);
+        String primeraLetra=""+usuario.charAt(0);
+        primeraLetra= primeraLetra.toUpperCase();
+        txt_usr.setText(primeraLetra);//cambiamos texto al nombre del usuario logueado
+
+        // ACCIONES DEL MENU
+        TextView textViewLetraPersonal=(TextView)findViewById(R.id.textViewLetraPersonal);
+        textViewLetraPersonal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Toast.makeText(getApplicationContext(), "Menu alternativo.... ", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(UsuarioSeleccionado.this, Main2Activity.class);
+                startActivity(intent);
+            }
+        });
+        ImageView iv1=(ImageView)findViewById(R.id.imagenBuscarDonante);
+        iv1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Buscar Donante.... ", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(UsuarioSeleccionado.this, BuscarDonanteR.class);
+                startActivity(intent);
+            }
+        });
+        ImageView iv2=(ImageView)findViewById(R.id.imageMensaje);
+        iv2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               /* Toast.makeText(getApplicationContext(), "Mensajear.... ", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(UsuarioSeleccionado.this, Mensaje.class);
+                startActivity(intent);*/
+                Toast.makeText(getApplicationContext(), "Mensaje", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(Intent.ACTION_SENDTO,
+                        Uri.fromParts("mailto", getResources().getString(R.string.mail),null));
+                intent.putExtra(Intent.EXTRA_SUBJECT,getResources().getString(R.string.subject));
+                startActivity(Intent.createChooser(intent, getResources().getString(R.string.envio)));
+            }
+        });
+        ImageView iv3=(ImageView)findViewById(R.id.imageLlamar);
+        iv3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               /* Toast.makeText(getApplicationContext(), "Conversar.... ", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(UsuarioSeleccionado.this, Conversar.class);
+                startActivity(intent);*/
+                Toast.makeText(getApplicationContext(), "Conversar.... ", Toast.LENGTH_LONG).show();
+                String number = "979612253";
+                Intent intent = new Intent(Intent.ACTION_CALL);
+                intent.setData(Uri.parse("tel:" + number));
+                if (ActivityCompat.checkSelfPermission(UsuarioSeleccionado.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    return;
+                }
+                startActivity(intent);
+            }
+        });
+        ImageView iv4=(ImageView)findViewById(R.id.imageAbout);
+        iv4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Acerca de.... ", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(UsuarioSeleccionado.this, AcercadeActivity.class);
+                startActivity(intent);
+            }
+        });
+        ImageView iv5=(ImageView)findViewById(R.id.imagengpsUsuarios);
+        iv5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Gps Usuarios.... ", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(UsuarioSeleccionado.this, Geolocalizar.class);
+                startActivity(intent);
+            }
+        });
+        ImageView iv6=(ImageView)findViewById(R.id.imagenHospitales);
+        iv6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Lista Hospitales.... ", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(UsuarioSeleccionado.this, HospitalesActivity.class);
+                startActivity(intent);
+            }
+        });
+        ImageView iv7=(ImageView)findViewById(R.id.imageViewDisponibilidad);
+        iv7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Disponibilidad.... ", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(UsuarioSeleccionado.this, Disponibilidad.class);
+                startActivity(intent);
+            }
+        });
+        ImageView iv8=(ImageView)findViewById(R.id.imagenCompatibilidad);
+        iv8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Compatibilidad.... ", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(UsuarioSeleccionado.this, CompatibilidadActivity.class);
+                startActivity(intent);
+            }
+        });
+        ImageView iv9=(ImageView)findViewById(R.id.imagengpsHospitales);
+        iv9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "GPS Hospitales.... ", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(UsuarioSeleccionado.this, MapaHospitalesActivity.class);
+                startActivity(intent);
             }
         });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
@@ -69,6 +178,9 @@ public class UsuarioSeleccionado extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                drawerLayout.openDrawer(GravityCompat.START);
+                return true;
             case R.id.Acerca_de:
                 Toast.makeText(getApplicationContext(), "Opcion 1!", Toast.LENGTH_LONG).show();
                 final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -92,9 +204,44 @@ public class UsuarioSeleccionado extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Saliendo.... ", Toast.LENGTH_LONG).show();
                 finish();
                 return true;
-            default:
-                return super.onContextItemSelected(item);
         }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void setupNavigation(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        switch (menuItem.getItemId()) {
+                            case R.id.item_navigation_inbox:
+                                menuItem.setChecked(true);
+                                Toast.makeText(getApplicationContext(), "Disponibilidad ", Toast.LENGTH_LONG).show();
+                                Intent intent1 = new Intent(UsuarioSeleccionado.this, Disponibilidad.class);
+                                startActivity(intent1);
+                                return true;
+                            case R.id.item_navigation_starred:
+                                menuItem.setChecked(true);
+                                Toast.makeText(getApplicationContext(), "Compatibilidad ", Toast.LENGTH_LONG).show();
+                                Intent intent2 = new Intent(UsuarioSeleccionado.this, CompatibilidadActivity.class);
+                                startActivity(intent2);
+                                return true;
+                            case R.id.item_navigation_sent_mail:
+                                menuItem.setChecked(true);
+                                Toast.makeText(getApplicationContext(), "Hospitales ", Toast.LENGTH_LONG).show();
+                                Intent intent3 = new Intent(UsuarioSeleccionado.this, HospitalesActivity.class);
+                                startActivity(intent3);
+                                return true;
+                            case R.id.item_navigation_settings:
+                                menuItem.setChecked(true);
+                                Toast.makeText(getApplicationContext(), "About ", Toast.LENGTH_LONG).show();
+                                Intent intent4 = new Intent(UsuarioSeleccionado.this, AcercadeActivity.class);
+                                startActivity(intent4);
+                                return true;
+                        }
+                        return true;
+                    }
+                });
     }
 
 }

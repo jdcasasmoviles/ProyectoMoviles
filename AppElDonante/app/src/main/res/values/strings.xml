@@ -3,7 +3,6 @@
     <string name="action_settings">Settings</string>
     <string name="Acerca_de">Acerca de</string>
     <string name="Acerca_de_full">Aplicacion hecha por :\n Tomas J. Casas Rodriguez
-            \nDanny Julca
             \nEstudiantes de Ciencias de la Computacion
             \nDe la Universidad Nacional de Ingeneria
             \nPara el curso : PROGRAMACIÓN EN DISPOSITIVOS MÓVILES</string>
@@ -14,13 +13,14 @@
     <string name="distritos_prompt">distritos</string>
     <string name="TipoDeSangre_prompt">TipoDeSangre</string>
 
+
     <string name="title_activity_configuracion">Configuracion</string>
     <string name="title_activity_registrarse">Registrarse</string>
     <string name="title_activity_hospitales">Hospitales</string>
     <string name="title_activity_login">Login</string>
     <string name="title_activity_compatibilidad">Compatibilidad</string>
     <string name="title_activity_buscar_donantes">Buscar Donantes</string>
-    <string name="title_activity_mapa_hospitales">Mapa Hospitales</string>
+    <string name="title_activity_mapa_hospitales">Hospitales</string>
     <string name="title_activity_acercade">Acerca de</string>
 
     <string name="add_button">Añadir</string>
@@ -46,6 +46,13 @@
     <string name="subject">AsuntoPrueba</string>
     <string name="envio">MuyBuenas</string>
     <string name="text">Comparte mi mensaje</string>
+    <string name="action_buscar">Buscar</string>
+    <string name="action_nuevo">Nuevo</string>
+    <string name="action_adiccional1">Adicional1</string>
+    <string name="action_adiccional2">Adicional2</string>
+    <string name="action_adiccional3">Adicional3</string>
+    <string name="fragment1">fragment1</string>
+    <string name="fragment2">fragment2</string>
 
 
     <string-array name="names_array">
@@ -100,7 +107,7 @@
         <item>Jeremy</item>
         <item>Daniel</item>
     </string-array>
-    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_main2">MENU</string>
     <string name="title_activity_buscar_donante_r">BuscarDonanteR</string>
     <string name="title_activity_conversar">Conversar</string>
     <string name="title_activity_disponibilidad">Disponibilidad</string>

@@ -14,17 +14,32 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Random;
 
 
 public class Main2Activity extends AppCompatActivity {
     Button boton1,boton2,boton3,boton4,boton5,boton6;
+    private int[] colors;
+    String usuarioRegistrodo="Tomas";
+    String mensajePersonalizado="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        TextView letraUsuario = (TextView) findViewById(R.id.letraUsuario);
+        mensajePersonalizado=mensajePersonalizado+"\n";
+        mensajePersonalizado=mensajePersonalizado+"User\t: "+usuarioRegistrodo+"\n";
+        mensajePersonalizado=mensajePersonalizado+"Cell\t: 123456789"+"\n";
+        mensajePersonalizado=mensajePersonalizado+"Dni\t: 12345678"+"\n";
+        mensajePersonalizado=mensajePersonalizado+"Tipo\t: O+"+"\n";
+        letraUsuario.setText(mensajePersonalizado);
+        colors = getResources().getIntArray(R.array.initial_colors);
+        initCards(letraUsuario,colors);
         //  add
         boton1=(Button)findViewById(R.id.boton1);
         boton1.setOnClickListener(new View.OnClickListener() {
@@ -46,7 +61,7 @@ public class Main2Activity extends AppCompatActivity {
             }
         });
 
-        boton3=(Button)findViewById(R.id.boton3);
+        boton3=(Button)findViewById(R.id.buttonConversar);
         boton3.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -55,19 +70,12 @@ public class Main2Activity extends AppCompatActivity {
                 Intent intent = new Intent(Intent.ACTION_CALL);
                 intent.setData(Uri.parse("tel:" + number));
                 if (ActivityCompat.checkSelfPermission(Main2Activity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
                     return;
                 }
                 startActivity(intent);
             }
         });
-        boton4=(Button)findViewById(R.id.boton4);
+        boton4=(Button)findViewById(R.id.buttonMensaje);
         boton4.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -79,7 +87,7 @@ public class Main2Activity extends AppCompatActivity {
             }
         });
 
-        boton5=(Button)findViewById(R.id.boton5);
+        boton5=(Button)findViewById(R.id.buttonGPS);
         boton5.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -89,16 +97,12 @@ public class Main2Activity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        boton6=(Button)findViewById(R.id.boton6);
-        boton6.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                Toast.makeText(getApplicationContext(), "Usuario Seleccionado.... ", Toast.LENGTH_LONG).show();
-                Intent intent=new Intent(Main2Activity.this,UsuarioSeleccionado.class);
-                startActivity(intent);
-            }
-        });
+    }
 
+    public void initCards(TextView letraUsuario,int[] colors) {
+        Random rnd = new Random();
+        int i=(int)(rnd.nextDouble() * 50);
+        letraUsuario.setBackgroundColor(colors[i]);
     }
 
     @Override

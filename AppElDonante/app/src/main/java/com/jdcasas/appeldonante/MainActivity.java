@@ -3,7 +3,6 @@ package com.jdcasas.appeldonante;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -78,11 +77,11 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
                 else if(web[+ position].equals("Mapa Hospitales")){
-                   // intent = new Intent(MainActivity.this, MapaHospitalesActivity.class);
-                    //startActivity(intent);
-                     intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse("https://www.google.com.pe/maps/search/universidad+nacional+de+ingenieria/data=!4m2!2m1!4b1?sa=X&hl=es-MX&nogmmr=1"));
+                   intent = new Intent(MainActivity.this, MapaHospitalesActivity.class);
                     startActivity(intent);
+                    // intent = new Intent(Intent.ACTION_VIEW);
+                  //  intent.setData(Uri.parse("https://www.google.com.pe/maps/search/universidad+nacional+de+ingenieria/data=!4m2!2m1!4b1?sa=X&hl=es-MX&nogmmr=1"));
+                   // startActivity(intent);
                 }
                 else if(web[+ position].equals("Acerca de")){
                     intent = new Intent(MainActivity.this, AcercadeActivity.class);

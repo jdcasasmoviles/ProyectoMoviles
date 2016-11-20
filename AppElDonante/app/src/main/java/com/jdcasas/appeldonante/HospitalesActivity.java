@@ -31,14 +31,9 @@ public class HospitalesActivity extends AppCompatActivity implements AdapterView
         setContentView(R.layout.activity_hospitales);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        TextView txt_usr = (TextView) findViewById(R.id.textView12);
-
-        txt_usr.setText("\nUsuario Invitado" + "\n\n");//cambiamos texto al nombre del usuario logueado
         //SPINNER
         this.sp_distrito = (Spinner) findViewById(R.id.sp_distrito);
         loadSpinnerDistritos();
-
         //cosas que aparecen en el layout
         tablaBD = (TableLayout) findViewById(R.id.TablaMisHospitales);
         //CREANDO TABLA PARA MOSTRAR
@@ -114,14 +109,7 @@ public class HospitalesActivity extends AppCompatActivity implements AdapterView
                 tablaBD.addView(tabla, new TableLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
                         ActionBar.LayoutParams.MATCH_PARENT));
             }
-
-
     }
-
-
-
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

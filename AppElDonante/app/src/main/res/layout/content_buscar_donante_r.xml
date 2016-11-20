@@ -10,34 +10,64 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.jdcasas.appeldonante.BuscarDonanteR"
+    android:background="#e0dcdc"
     tools:showIn="@layout/activity_buscar_donante_r">
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="1">
-        <EditText
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/editText"
-            android:hint="Nombre"
-            android:layout_weight="0.78" />
+        android:weightSum="1"
+        android:id="@+id/linearLayout">
+
+        <Spinner
+            android:id="@+id/sp_TipoDeSangre"
+            android:layout_width="213dp"
+            android:layout_height="38dp"
+            android:prompt="@string/TipoDeSangre_prompt"
+            android:background="#f5efef"
+            android:spinnerMode="dialog"
+            android:touchscreenBlocksFocus="true" />
         <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Buscar"
-            android:id="@+id/bBuscar" />
+            android:id="@+id/bBuscarTipoSangre"
+            android:background="#c8c4c4"
+            android:onClick="botonBuscarDonante" />
     </LinearLayout>
-
-    <ListView
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/lista1"
+        android:weightSum="1"
+        android:layout_below="@+id/linearLayout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
-        android:layout_gravity="center_horizontal" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/scrollView10"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/textView10" >
 
+            <HorizontalScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/horizontalScrollView5"
+                android:layout_alignBottom="@+id/scrollView10"
+                android:layout_toRightOf="@+id/scrollView10" >
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_above="@+id/scrollView10"
+                    android:id="@+id/tablaBDDonante">
+                </TableLayout>
+            </HorizontalScrollView>
+        </ScrollView>
 
+    </LinearLayout>
 
 </RelativeLayout>

@@ -22,6 +22,16 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+            <TextView android:id="@+id/link_to_register"
+                android:text="Acerca de "
+                android:gravity="center"
+                android:textSize="20dip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:background="#0b3be6"
+                android:textColor="#ffffff"
+                />
 
             <ImageView android:layout_height="wrap_content"
                 android:src="@drawable/android"
@@ -38,33 +48,11 @@
 
             />
 
-            <TextView android:id="@+id/link_to_register"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Acerca de "
-                android:gravity="center"
-                android:textSize="20dip"
-                android:textColor="#155ecc"/>
-
             <TextView android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/Acerca_de_full"
-                android:textColor="#15cc34"
+                android:textColor="#080d09"
                />
-
-
-
-
-            <Button
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dip"
-                android:text="Volver"
-                android:textColor="#ffffff"
-                android:background="#f40b0b"
-                android:id="@+id/volver"
-                />
-
         </LinearLayout>
     </ScrollView>
 

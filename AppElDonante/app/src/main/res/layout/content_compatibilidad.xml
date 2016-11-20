@@ -10,12 +10,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.jdcasas.appeldonante.CompatibilidadActivity"
+    android:background="#e0dcdc"
     tools:showIn="@layout/activity_compatibilidad">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/scrollView8" >
-
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -24,47 +24,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:id="@+id/TipoDeSangre"
-                android:text="@string/TipoDeSangre"
-                android:textSize="13dp"
-                android:layout_gravity="center_horizontal"
-                android:textColor="#0a0eef" />
-            <Spinner
-                android:id="@+id/sp_TipoDeSangre"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:prompt="@string/TipoDeSangre_prompt"
-                android:background="#949290"
-                android:spinnerMode="dropdown" />
-
-            <Button
-                android:id="@+id/button1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Puede donar a "
-                android:textSize="13dp"
-                android:background="#FFF40B0B"
-                android:textColor="#ffffff" />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Puede recibir de "
-                android:id="@+id/button2"
-                android:layout_gravity="center_horizontal"
-                android:textSize="13dp"
-                android:background="#f40b0b"
-                android:textColor="#ffffff" />
+                android:text="CUADRO DE COMPATIBILIDAD"
+                android:id="@+id/textViewCompatibilidad"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:textColor="#ffffff"
+                android:background="#e20a0a"
+                android:textSize="20dp"
+                android:gravity="center" />
             <ImageView
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:src="@drawable/compatibilidad"
                 android:id="@+id/img"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_marginTop="15dip">
                 android:gravity="center"
             </ImageView>
-
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

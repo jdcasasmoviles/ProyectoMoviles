@@ -8,5 +8,9 @@
     <dimen name="padding">16dp</dimen>
     <dimen name="text_size">32sp</dimen>
     <dimen name="initial_size">50sp</dimen>
+    <dimen name="status_bar_height">16dp</dimen>
+    <dimen name="navigation_margin">16dp</dimen>
+    <dimen name="formularioletra">12dp</dimen>
+
 
 </resources>

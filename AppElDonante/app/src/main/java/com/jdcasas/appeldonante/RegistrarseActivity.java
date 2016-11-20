@@ -1,21 +1,55 @@
 package com.jdcasas.appeldonante;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URI;
+import java.net.URL;
+
+import cz.msebera.android.httpclient.HttpEntity;
+import cz.msebera.android.httpclient.HttpResponse;
+import cz.msebera.android.httpclient.client.HttpClient;
+import cz.msebera.android.httpclient.client.methods.HttpGet;
+import cz.msebera.android.httpclient.impl.client.DefaultHttpClient;
+
 public class RegistrarseActivity extends AppCompatActivity  implements AdapterView.OnItemSelectedListener{
     Spinner sp_tipoSangre;
+    String dni="";
+    String nombres="";
+    String apellidos="";
+    String sexo="";
+    String tiposangre="";
+    String latitud="";
+    String longitud="";
+    String email="";
+    String telefono="";
+    String usuario="";
+    String password="";
+    String disponibilidad="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,10 +63,85 @@ public class RegistrarseActivity extends AppCompatActivity  implements AdapterVi
 
     }
 
+    public void botonReset(View view)
+    {   finish();
+        Toast.makeText(getApplicationContext(), "Reset.... ", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this, RegistrarseActivity.class);
+        startActivity(intent);
+    }
+    public void botonRegistrar(View view)
+    {   EditText etDni = (EditText) findViewById(R.id.editTextDni);
+        dni=etDni.getText().toString();
+        EditText etNombres = (EditText) findViewById(R.id.editTextNombres);
+        nombres=etNombres.getText().toString();
+        EditText ettApellidos = (EditText) findViewById(R.id.editTextApellidos);
+        apellidos=ettApellidos.getText().toString();
+        Spinner spTipoSangre = (Spinner) findViewById(R.id.sp_TipoDeSangre);
+        tiposangre=spTipoSangre.getItemAtPosition(spTipoSangre.getSelectedItemPosition()).toString();
+        tiposangre=cambiotiposangre(tiposangre);
+        EditText etLatitud = (EditText) findViewById(R.id.editTextCoorX);
+        latitud=etLatitud.getText().toString();
+        EditText etLongitud = (EditText) findViewById(R.id.editTextCoorY);
+        longitud=etLongitud.getText().toString();
+        EditText etEmail = (EditText) findViewById(R.id.editTextEmail);
+        email=etEmail.getText().toString();
+        EditText etTelefono = (EditText) findViewById(R.id.editTextTelefono);
+        telefono=etTelefono.getText().toString();
+        EditText etUsuario = (EditText) findViewById(R.id.editTextUsuario);
+        usuario=etUsuario.getText().toString();
+        EditText etPassword = (EditText) findViewById(R.id.editTextPass);
+        password=etPassword.getText().toString();
+        CheckBox cbDisponibilidad = (CheckBox) findViewById(R.id.cbDisponibilidad);
+        if (cbDisponibilidad.isChecked()) {
+            disponibilidad="S";
+        }
+        else{
+            disponibilidad="N";
+        }
+
+        if(!dni.equals("")&& !nombres.equals("")&& !apellidos.equals("")&& !sexo.equals("")&& !tiposangre.equals("")&& !latitud.equals("")&& !longitud.equals("")&& !email.equals("")&& !telefono.equals("")&& !usuario.equals("")&& !password.equals("")&& !disponibilidad.equals("")){
+            Toast.makeText(getApplicationContext(), "Conectando... ", Toast.LENGTH_LONG).show();
+            //PARA LA CONEXION AL SERVIDOR
+            conexionGet Conexion= null;
+            try {
+                Conexion = new conexionGet(this);
+                Conexion.execute(dni, nombres, apellidos, sexo, tiposangre, latitud, longitud, email, telefono, usuario, password, disponibilidad);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        else{
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("INFORME:")
+                    .setMessage("Hay campos sin llenar")
+                    .setPositiveButton("Aceptar",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+            builder.create().show();
+        }
 
 
+    }
+    public void rbSexo(View view)
+    {
+        RadioButton rbMasculino=(RadioButton) findViewById(R.id.radioButtonM);
+        RadioButton rbFemenino=(RadioButton) findViewById(R.id.radioButtonF);
+        if(rbMasculino.isChecked()){
+             sexo="M";
+            rbFemenino.setChecked(false);
+        }
+        else if(rbFemenino.isChecked()){
+             sexo="F";
+            rbMasculino.setChecked(false);
+        }
 
-    private void loadSpinnertipoSangre() {
+    }
+
+        private void loadSpinnertipoSangre() {
 
         // Create an ArrayAdapter using the string array and a default spinner
         // layout
@@ -85,6 +194,42 @@ public class RegistrarseActivity extends AppCompatActivity  implements AdapterVi
         }
     }
 
+    public String cambiotiposangre(String tiposangre){
+        if(tiposangre.equals("A+")){
+            tiposangre="1";
+            return tiposangre;
+        }
+        else if(tiposangre.equals("A-")){
+            tiposangre="2";
+            return tiposangre;
+        }
+        else if(tiposangre.equals("B+")){
+            tiposangre="3";
+            return tiposangre;
+        }
+        else if(tiposangre.equals("B-")){
+            tiposangre="4";
+            return tiposangre;
+        }
+        else if(tiposangre.equals("AB+")){
+            tiposangre="5";
+            return tiposangre;
+        }
+        else if(tiposangre.equals("AB-")){
+            tiposangre="6";
+            return tiposangre;
+        }
+        else if(tiposangre.equals("O+")){
+            tiposangre="7";
+            return tiposangre;
+        }
+        else if(tiposangre.equals("O-")){
+            tiposangre="8";
+            return tiposangre;
+        }
+        return tiposangre;
+    }
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
@@ -94,4 +239,158 @@ public class RegistrarseActivity extends AppCompatActivity  implements AdapterVi
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
-}
+    class conexionGet extends AsyncTask<String,Void,String> {
+        private Context context;
+        String respuestaServidor = "";
+
+        public conexionGet(Context context) throws JSONException {
+            this.context = context;
+        }
+
+        protected String doInBackground(String... args) {
+            BaseDatos medica = new BaseDatos(1);
+            String[] datos = new String[13];
+
+            for(int i=0;i<12;i++){
+                datos[i] = (String) args[i];
+                System.out.println("datos :  "+datos[i] );
+            }
+            String link = medica.insertarUsuario(datos);
+            System.out.println("url..  :  " + link);
+            try {
+                URL url = new URL(link);
+                HttpClient client = new DefaultHttpClient();
+                HttpGet request = new HttpGet();
+                request.setURI(new URI(link));
+                HttpResponse response = client.execute(request);
+                if (response.getStatusLine().getStatusCode() == 200) {
+                    HttpEntity entity = response.getEntity();
+                    if (entity != null) {
+                        InputStream instream = entity.getContent();
+                        String result = convertStreamToString(instream);
+                        Log.d("result ****", String.valueOf((result)));
+                        respuestaServidor = result;
+                        instream.close();
+                    }
+                } else {
+                    Log.d("result **** error", String.valueOf((0)));
+                }
+                return respuestaServidor;
+            } catch (Exception e) {
+                return new String("Exception: " + e.getMessage());
+            }
+
+        }
+
+        protected void onPostExecute(String result) {
+            try {
+                System.out.println("result : " + result);
+                JSONArray arrayBD =new JSONArray(result);
+                String cadenaResultado ="";
+                for (int i = 0; i < arrayBD.length(); i++) {
+                    JSONObject jsonChildNode = arrayBD.getJSONObject(i);
+                    cadenaResultado =cadenaResultado+"dni : "+ jsonChildNode.optString("dni")+"\n";
+                    cadenaResultado =cadenaResultado+"nombres : "+ jsonChildNode.optString("nombres")+"\n";
+                    cadenaResultado =cadenaResultado+"apellidos : "+ jsonChildNode.optString("apellidos")+"\n";
+                    cadenaResultado =cadenaResultado+"sexo : "+ jsonChildNode.optString("sexo")+"\n";
+                    cadenaResultado =cadenaResultado+"tipo sangre : "+Numcambiotiposangre(jsonChildNode.optString("tiposangre"))+"\n";
+                    cadenaResultado =cadenaResultado+"latitud : "+ jsonChildNode.optString("latitud")+"\n";
+                    cadenaResultado =cadenaResultado+"longitud : "+ jsonChildNode.optString("longitud")+"\n";
+                    cadenaResultado =cadenaResultado+"email : "+ jsonChildNode.optString("email")+"\n";
+                    cadenaResultado =cadenaResultado+"telefono : "+ jsonChildNode.optString("telefono")+"\n";
+                    cadenaResultado =cadenaResultado+"usuario : "+ jsonChildNode.optString("usuario")+"\n";
+                    cadenaResultado =cadenaResultado+"password : "+ jsonChildNode.optString("password")+"\n";
+                    cadenaResultado =cadenaResultado+"disponibilidad : "+ jsonChildNode.optString("disponibilidad")+"\n";
+                    cadenaResultado =cadenaResultado+"RECUERDE SU USUARIO Y PASSWORD\nGRACIAS";
+                }
+                final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("DATOS REGISTRADOS:")
+                        .setMessage(cadenaResultado)
+                        .setPositiveButton("Aceptar",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                        Toast.makeText(getApplicationContext(), "Saliendo.... ", Toast.LENGTH_LONG).show();
+                                        finish();
+                                    }
+                                });
+                builder.create().show();
+            } catch (JSONException e) {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("ALERTA")
+                        .setMessage("No se obtuvo respuesta del servidor")
+                        .setPositiveButton("Aceptar",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+                builder.create().show();
+                e.printStackTrace();
+            }
+        }
+
+
+        private String convertStreamToString(InputStream in) {
+            int BUFFER_SIZE = 2000;
+            InputStreamReader isr = new InputStreamReader(in);
+            int charRead;
+            String str = "";
+            char[] inputBuffer = new char[BUFFER_SIZE];
+            try {
+                while ((charRead = isr.read(inputBuffer)) > 0) {
+                    String readString = String.copyValueOf(inputBuffer, 0, charRead);
+                    str += readString;
+                    inputBuffer = new char[BUFFER_SIZE];
+                }
+                in.close();
+            } catch (IOException e) {
+                // Handle Exception
+                e.printStackTrace();
+                return "";
+            }
+            return str;
+        }
+
+        public String Numcambiotiposangre(String tiposangre){
+            if(tiposangre.equals("1")){
+                tiposangre="A+";
+                return tiposangre;
+            }
+            else if(tiposangre.equals("2")){
+                tiposangre="A-";
+                return tiposangre;
+            }
+            else if(tiposangre.equals("3")){
+                tiposangre="B+";
+                return tiposangre;
+            }
+            else if(tiposangre.equals("4")){
+                tiposangre="B-";
+                return tiposangre;
+            }
+            else if(tiposangre.equals("5")){
+                tiposangre="AB+";
+                return tiposangre;
+            }
+            else if(tiposangre.equals("6")){
+                tiposangre="AB-";
+                return tiposangre;
+            }
+            else if(tiposangre.equals("7")){
+                tiposangre="O+";
+                return tiposangre;
+            }
+            else if(tiposangre.equals("8")){
+                tiposangre="O-";
+                return tiposangre;
+            }
+            return tiposangre;
+        }
+
+    }
+
+
+    }
