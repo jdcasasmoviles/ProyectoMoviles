@@ -1,12 +1,16 @@
 package com.jdcasas.appeldonante;
 public  class BaseDatos {
 	String IP_Server="masterwishmaster.esy.es";//IP DE NUESTRO PC LOCALHOST
-    //String IP_Server="192.168.1.14";
+    //String IP_Server="192.168.1.42";
     String URL="" ;
     public BaseDatos(int numeroTabla){
         if(numeroTabla==1){
             URL = "http://"+IP_Server+"/Donante/serverTablaUsuarios.php";
             System.out.println("Estoy usando tabla usuarios");
+        }
+        else  if(numeroTabla==2){
+            URL = "http://"+IP_Server+"/Donante/serverTablaHospitales.php";
+            System.out.println("Estoy usando tabla hospitales");
         }
     }
 
@@ -15,6 +19,56 @@ public  class BaseDatos {
          tiposangre=cambiotiposangre(tiposangre);
             URL = URL + "?operacion=buscarBDDonante&tiposangre=" +tiposangre;
             System.out.println("URL buscar  BD : " + URL);
+        return URL;
+    }
+
+    public String buscartiposangreCoordenadad(String tiposangre) {
+        tiposangre=tiposangre.replace(" ","%20");
+        tiposangre=cambiotiposangre(tiposangre);
+        URL = URL + "?operacion=buscartiposangreCoordenadad&tiposangre=" +tiposangre;
+        System.out.println("URL buscar  BD : " + URL);
+        return URL;
+    }
+
+    public String buscardistrito(String distrito) {
+        distrito=distrito.replace(" ", "%20");
+        URL = URL + "?operacion=buscarBDHospital&distrito=" +distrito;
+        System.out.println("URL buscar  BD x distrito : " + URL);
+        return URL;
+    }
+
+    public String buscarBDUsuario(String usuario) {
+        usuario=usuario.replace(" ", "%20");
+        URL = URL + "?operacion=buscarBDUsuario&usuario=" +usuario;
+        System.out.println("URL buscar  BD x usuario : " + URL);
+        return URL;
+    }
+
+    public String buscarBDHDistritoCoordenadas(String distrito) {
+        distrito=distrito.replace(" ", "%20");
+        URL = URL + "?operacion=buscarBDHDistritoCoordenadas&distrito=" +distrito;
+        System.out.println("URL buscar  BD hospitales buscar x distrito : " + URL);
+        return URL;
+    }
+
+    public String buscarBDHidCoordenadas(String id_hospital) {
+        id_hospital=id_hospital.replace(" ", "%20");
+        URL = URL + "?operacion=buscarBDHidCoordenadas&id_hospital=" +id_hospital;
+        System.out.println("URL buscar  BD hospitales buscar x distrito : " + URL);
+        return URL;
+    }
+
+    public String buscarBDCoordenadas(String telefono) {
+        telefono=telefono.replace(" ", "%20");
+        URL = URL + "?operacion=buscarBDCoordenadas&telefono=" +telefono;
+        System.out.println("URL buscar  BD usuario buscar x telefono : " + URL);
+        return URL;
+    }
+
+    public String updateBDDisponibilidad(String usuario,String disponibilidad) {
+        disponibilidad=disponibilidad.replace(" ", "%20");
+        URL = URL + "?operacion=updateBDDisponibilidad&usuario=" +usuario+"&disponibilidad=" +disponibilidad;
+        System.out.println("URL BD actualizar disponibilidad : " + URL);
         return URL;
     }
 

@@ -10,9 +10,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.jdcasas.appeldonante.BuscarDonanteR"
-    android:background="#e0dcdc"
+    android:background="#ffffff"
     tools:showIn="@layout/activity_buscar_donante_r">
-
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -22,19 +21,22 @@
 
         <Spinner
             android:id="@+id/sp_TipoDeSangre"
-            android:layout_width="213dp"
-            android:layout_height="38dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:prompt="@string/TipoDeSangre_prompt"
-            android:background="#f5efef"
-            android:spinnerMode="dialog"
+            android:spinnerMode="dropdown"
+            android:layout_marginRight="6dip"
+            android:textSize="@dimen/formularioletra"
+            android:background="@drawable/rounded_corners_spiner"
+            android:layout_weight="0.5"
             android:touchscreenBlocksFocus="true" />
         <Button
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Buscar"
             android:id="@+id/bBuscarTipoSangre"
-            android:background="#c8c4c4"
+            android:background="@drawable/rounded_corners_registro"
+            android:layout_weight="0.5"
             android:onClick="botonBuscarDonante" />
     </LinearLayout>
     <LinearLayout
@@ -69,5 +71,4 @@
         </ScrollView>
 
     </LinearLayout>
-
 </RelativeLayout>

@@ -29,8 +29,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tomas J. Casas Rodriguez"
+            android:id="@+id/TextViewUsuario"
+            android:text=""
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            android:textSize="12dp" />
+            android:textSize="16dp" />
     </LinearLayout>
 </FrameLayout>

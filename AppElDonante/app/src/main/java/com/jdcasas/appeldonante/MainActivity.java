@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
             R.drawable.q4,
             R.drawable.q5,
             R.drawable.q6,
-            R.drawable.q7
+            R.drawable.about
     };
 
     @Override
@@ -79,9 +79,6 @@ public class MainActivity extends AppCompatActivity {
                 else if(web[+ position].equals("Mapa Hospitales")){
                    intent = new Intent(MainActivity.this, MapaHospitalesActivity.class);
                     startActivity(intent);
-                    // intent = new Intent(Intent.ACTION_VIEW);
-                  //  intent.setData(Uri.parse("https://www.google.com.pe/maps/search/universidad+nacional+de+ingenieria/data=!4m2!2m1!4b1?sa=X&hl=es-MX&nogmmr=1"));
-                   // startActivity(intent);
                 }
                 else if(web[+ position].equals("Acerca de")){
                     intent = new Intent(MainActivity.this, AcercadeActivity.class);

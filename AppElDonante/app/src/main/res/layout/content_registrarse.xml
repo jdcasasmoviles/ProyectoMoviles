@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="#e0dcdc"
+    android:background="#ffffff"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.jdcasas.appeldonante.RegistrarseActivity"
     tools:showIn="@layout/activity_registrarse">
@@ -29,7 +29,8 @@
                 android:textSize="18dp"
                 android:id="@+id/textView0"
                 android:layout_gravity="center_horizontal"
-                android:background="#0b3be6"
+                android:background="@drawable/rounded_corners_azul"
+                android:layout_marginBottom="15dip"
                 android:textColor="#ffffff" />
             <Button
                 android:layout_width="114dp"
@@ -45,10 +46,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:weightSum="1">
+
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="wrap_content"
-                    android:layout_height="177dp"
+                    android:layout_height="260dp"
                     android:paddingBottom="@dimen/activity_vertical_margin"
                     android:paddingLeft="@dimen/activity_horizontal_margin"
                     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -69,7 +71,7 @@
                         android:id="@+id/editTextNombres"
                         android:textSize="@dimen/formularioletra"
                         android:textColor="#100b0b"
-                        android:background="#f1f6f2"
+                        android:theme="@style/MyEditText"
                         android:text="" />
                     <TextView
                         android:layout_width="wrap_content"
@@ -85,8 +87,8 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/editTextApellidos"
                         android:textColor="#100b0b"
-                        android:background="#f1f6f2"
                         android:textSize="@dimen/formularioletra"
+                        android:theme="@style/MyEditText"
                         android:text="" />
                     <TextView
                         android:layout_width="wrap_content"
@@ -103,12 +105,11 @@
                         android:id="@+id/editTextDni"
                         android:inputType="number"
                         android:textColor="#100b0b"
-                        android:background="#f1f6f2"
                         android:textSize="@dimen/formularioletra"
+                        android:theme="@style/MyEditText"
                         android:text="" />
-
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:text="Email :"
@@ -121,10 +122,11 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/editTextEmail"
                         android:textColor="#100b0b"
-                        android:background="#f1f6f2"
                         android:textSize="@dimen/formularioletra"
+                        android:theme="@style/MyEditText"
                         android:text="" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="wrap_content"
@@ -149,9 +151,10 @@
                         android:id="@+id/editTextTelefono"
                         android:inputType="phone"
                         android:textColor="#100b0b"
-                        android:background="#f1f6f2"
                         android:textSize="@dimen/formularioletra"
+                        android:theme="@style/MyEditText"
                         android:text="" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -160,28 +163,35 @@
                         android:id="@+id/textViewSexo"
                         android:textSize="@dimen/formularioletra"
                         android:textColor="@color/textViewRegistroColor" />
-
-                    <RadioButton
-                        android:layout_width="match_parent"
+                    <RadioGroup
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Masculino"
-                        android:id="@+id/radioButtonM"
-                        android:textColor="#100b0b"
-                        android:buttonTint="#06e23a"
-                        android:textSize="@dimen/formularioletra"
-                        android:background="#e0dcdc"
-                        android:onClick="rbSexo" />
+                        >
+                        <RadioButton
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Masculino"
+                            android:id="@+id/radioButtonM"
+                            android:textColor="#100b0b"
+                            android:buttonTint="#06e23a"
+                            android:textSize="@dimen/formularioletra"
+                            android:background="#ffffff"
+                            android:theme="@style/MyRadioButton"
+                            android:onClick="rbSexo" />
 
-                    <RadioButton
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Femenino"
-                        android:id="@+id/radioButtonF"
-                        android:textColor="#100b0b"
-                        android:buttonTint="#0ce622"
-                        android:textSize="@dimen/formularioletra"
-                        android:background="#e0dcdc"
-                        android:onClick="rbSexo" />
+                        <RadioButton
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Femenino"
+                            android:id="@+id/radioButtonF"
+                            android:textColor="#100b0b"
+                            android:buttonTint="#0ce622"
+                            android:textSize="@dimen/formularioletra"
+                            android:background="#ffffff"
+                            android:theme="@style/MyRadioButton"
+                            android:onClick="rbSexo" />
+                    </RadioGroup>
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -189,14 +199,16 @@
                         android:text="Tipo de sangre :"
                         android:id="@+id/textViewTipoSangre"
                         android:textSize="@dimen/formularioletra"
+                        android:layout_marginTop="25dip"
                         android:textColor="@color/textViewRegistroColor" />
                     <Spinner
                         android:id="@+id/sp_TipoDeSangre"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:prompt="@string/TipoDeSangre_prompt"
-                        android:background="#ffffff"
                         android:textSize="@dimen/formularioletra"
+                        android:layout_marginTop="5dip"
+                        android:background="@drawable/rounded_corners_spiner"
                         android:spinnerMode="dropdown" />
                 </LinearLayout>
             </LinearLayout>
@@ -210,7 +222,7 @@
                 android:textSize="18dp"
                 android:id="@+id/textViewCoordenadas"
                 android:gravity="center_horizontal"
-                android:background="#0b3be6"
+                android:background="@drawable/rounded_corners_azul"
                 android:textColor="#ffffff"  />
 
             <LinearLayout
@@ -241,7 +253,7 @@
                         android:inputType="numberDecimal"
                         android:textSize="@dimen/formularioletra"
                         android:textColor="#100b0b"
-                        android:background="#f1f6f2"
+                        android:theme="@style/MyEditText"
                         android:text="" />
                     <TextView
                         android:layout_width="wrap_content"
@@ -258,7 +270,7 @@
                         android:inputType="numberDecimal"
                         android:textSize="@dimen/formularioletra"
                         android:textColor="#100b0b"
-                        android:background="#f1f6f2"
+                        android:theme="@style/MyEditText"
                         android:text="" />
                 </LinearLayout>
                 <LinearLayout
@@ -283,8 +295,8 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/editTextUsuario"
                         android:textColor="#100b0b"
-                        android:background="#f1f6f2"
                         android:textSize="@dimen/formularioletra"
+                        android:theme="@style/MyEditText"
                         android:text="" />
                     <TextView
                         android:layout_width="wrap_content"
@@ -301,8 +313,8 @@
                         android:id="@+id/editTextPass"
                         android:inputType="textPassword"
                         android:textColor="#100b0b"
-                        android:background="#f1f6f2"
                         android:textSize="@dimen/formularioletra"
+                        android:theme="@style/MyEditText"
                         android:text="" />
                     <CheckBox
                         android:layout_width="wrap_content"
@@ -311,8 +323,9 @@
                         android:id="@+id/cbDisponibilidad"
                         android:textColor="#100b0b"
                         android:buttonTint="#0ec21a"
-                        android:background="#e0dcdc"
+                        android:background="#ffffff"
                         android:textSize="@dimen/formularioletra"
+                        android:theme="@style/MyCheckBox"
                         />
 
                 </LinearLayout>
@@ -328,7 +341,8 @@
                         android:text="Auto Coor."
                         android:id="@+id/ButtonAutomatico"
                         android:textSize="@dimen/formularioletra"
-                        android:background="#c8c4c4"
+                        android:theme="@style/MyButton"
+                        android:background="@drawable/rounded_corners_registro"
                         android:layout_marginRight="4dip"
                         />
                     <Button
@@ -337,8 +351,9 @@
                         android:text="Reset"
                         android:textSize="@dimen/formularioletra"
                         android:id="@+id/ButtonReset"
-                        android:background="#c8c4c4"
                         android:layout_marginRight="4dip"
+                        android:theme="@style/MyButton"
+                        android:background="@drawable/rounded_corners_registro"
                         android:onClick="botonReset" />
 
                 <Button
@@ -347,7 +362,8 @@
                     android:text="Registrar"
                     android:textSize="@dimen/formularioletra"
                     android:id="@+id/ButtonRegistrarse"
-                    android:background="#c8c4c4"
+                    android:theme="@style/MyButton"
+                    android:background="@drawable/rounded_corners_registro"
                     android:onClick="botonRegistrar" />
 
             </LinearLayout>

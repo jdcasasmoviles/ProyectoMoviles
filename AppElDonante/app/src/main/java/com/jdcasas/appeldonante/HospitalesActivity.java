@@ -2,12 +2,15 @@ package com.jdcasas.appeldonante;
 
 import android.app.ActionBar;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +21,22 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URI;
+import java.net.URL;
+
+import cz.msebera.android.httpclient.HttpEntity;
+import cz.msebera.android.httpclient.HttpResponse;
+import cz.msebera.android.httpclient.client.HttpClient;
+import cz.msebera.android.httpclient.client.methods.HttpGet;
+import cz.msebera.android.httpclient.impl.client.DefaultHttpClient;
 
 public class HospitalesActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     //VARIABLES
@@ -34,8 +53,15 @@ public class HospitalesActivity extends AppCompatActivity implements AdapterView
         //SPINNER
         this.sp_distrito = (Spinner) findViewById(R.id.sp_distrito);
         loadSpinnerDistritos();
+        }
+
+    public void botonBuscarHospital(View view){
+        Spinner spinner = (Spinner) findViewById(R.id.sp_distrito);
+        Toast mensaje = Toast.makeText(getApplicationContext(), "Buscando......", Toast.LENGTH_LONG);
+        mensaje.show();
         //cosas que aparecen en el layout
         tablaBD = (TableLayout) findViewById(R.id.TablaMisHospitales);
+        tablaBD.removeAllViews();
         //CREANDO TABLA PARA MOSTRAR
         TableRow tabla = new TableRow(this);
         tabla.setBackgroundColor(Color.CYAN);
@@ -49,6 +75,11 @@ public class HospitalesActivity extends AppCompatActivity implements AdapterView
         viewHeaderHospital.setTextColor(Color.BLACK);
         viewHeaderDireccion.setTextColor(Color.BLACK);
         viewHeaderNecesitaTipo.setTextColor(Color.BLACK);
+        //dar estilo background
+        viewHeaderId.setBackgroundResource(R.drawable.rounded_corners_cyan);
+        viewHeaderHospital.setBackgroundResource(R.drawable.rounded_corners_cyan);
+        viewHeaderDireccion.setBackgroundResource(R.drawable.rounded_corners_cyan);
+        viewHeaderNecesitaTipo.setBackgroundResource(R.drawable.rounded_corners_cyan);
         //setea valores de textViews
         viewHeaderId.setText("Id");
         viewHeaderHospital.setText("Nombre");
@@ -66,49 +97,14 @@ public class HospitalesActivity extends AppCompatActivity implements AdapterView
         tabla.addView(viewHeaderNecesitaTipo);
         tablaBD.addView(tabla, new TableLayout.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,
                 ActionBar.LayoutParams.WRAP_CONTENT));
-            for (int i = 1; i < 5; i++) {
-                String id="00"+i;
-                String nombre="Hospital  "+i;
-                String direccion="Av. distriatal 0"+i+"0 Lote "+i;
-                String Necesitatipo="Tipo "+i;
-                tabla = new TableRow(this);
-                //AGREGA COLORES A LAS FILAS
-                if (i % 2 == 0) {
-                    tabla.setBackgroundColor(Color.LTGRAY);
-                }
-                else{
-                    tabla.setBackgroundColor(Color.WHITE);
-                }
-
-                TextView viewId = new TextView(this);
-                viewId.setText(id);
-                viewId.setPadding(6, 1, 6, 1);
-                tabla.addView(viewId);
-
-                TextView viewNombre = new TextView(this);
-                viewNombre.setText(nombre);
-                viewNombre.setPadding(6, 1, 6, 1);
-                tabla.addView(viewNombre);
-
-                TextView viewDireccion = new TextView(this);
-                viewDireccion.setText(direccion);
-                viewDireccion.setPadding(6, 1, 6, 1);
-                tabla.addView(viewDireccion);
-
-                TextView viewNecesitaTipo = new TextView(this);
-                viewNecesitaTipo.setText(Necesitatipo);
-                viewNecesitaTipo.setPadding(6, 1, 6, 1);
-                tabla.addView(viewNecesitaTipo);
-
-                //dar color a las letras
-                viewId.setTextColor(Color.BLACK);
-                viewNombre.setTextColor(Color.BLACK);
-                viewDireccion.setTextColor(Color.BLACK);
-                viewNecesitaTipo.setTextColor(Color.BLACK);
-
-                tablaBD.addView(tabla, new TableLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
-                        ActionBar.LayoutParams.MATCH_PARENT));
-            }
+        //PARA LA CONEXION AL SERVIDOR
+        conexionGet Conexion= null;
+        try {
+            Conexion = new conexionGet(this,tablaBD,tabla);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Conexion.execute(spinner.getItemAtPosition(spinner.getSelectedItemPosition()).toString());
     }
 
     @Override
@@ -175,6 +171,167 @@ public class HospitalesActivity extends AppCompatActivity implements AdapterView
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+    class conexionGet extends AsyncTask<String,Void,String> {
+        private Context context;
+        TableLayout tablaBD;
+        TableRow tabla;
+        String respuestaServidor = "";
 
+        public conexionGet(Context context, TableLayout tablaBD, TableRow tabla) throws JSONException {
+            this.context = context;
+            this.tablaBD = tablaBD;
+            this.tabla = tabla;
+        }
+
+        protected String doInBackground(String... args) {
+            String distrito = (String) args[0];
+            BaseDatos medica = new BaseDatos(2);
+            String link = medica.buscardistrito(distrito);
+            System.out.println("url..  :  " + link);
+            try {
+                URL url = new URL(link);
+                HttpClient client = new DefaultHttpClient();
+                HttpGet request = new HttpGet();
+                request.setURI(new URI(link));
+                HttpResponse response = client.execute(request);
+                if (response.getStatusLine().getStatusCode() == 200) {
+                    HttpEntity entity = response.getEntity();
+                    if (entity != null) {
+                        InputStream instream = entity.getContent();
+                        String result = convertStreamToString(instream);
+                        Log.d("result ****", String.valueOf((result)));
+                        //json.put("response_", new JSONObject(result));
+                        respuestaServidor=result;
+                        instream.close();
+                    }
+                } else {
+                    Log.d("result **** error", String.valueOf((0)));
+                }
+                return respuestaServidor;
+            } catch (Exception e) {
+                return new String("Exception: " + e.getMessage());
+            }
+
+        }
+
+        protected void onPostExecute(String result) {
+            int numColumnas=4;
+            try {
+                System.out.println("result : " + result);
+                JSONArray arrayBD =new JSONArray(result);
+                for (int i = 0; i < arrayBD.length(); i++) {
+                    JSONObject jsonChildNode = arrayBD.getJSONObject(i);
+                    String s1 = jsonChildNode.optString("id_hospital");
+                    String s2 = jsonChildNode.optString("nombre_hospital");
+                    String s3 = jsonChildNode.optString("direccion");
+                    String s4 = jsonChildNode.optString("necesita");
+                    String necesira="";
+                    for(int j=0;j<s4.length();j++){
+                        necesira=necesira+Numcambiotiposangre(s4.charAt(j)+"")+" ";
+                    }
+                   s4=necesira;
+                    System.out.println("cadenasss : " + s1 + "---" + s2 + "---" + s3 + "---" + s4);
+                    tabla = new TableRow(context);
+                    if (i % 2 == 0) {
+                        tabla.setBackgroundColor(Color.WHITE);
+                    } else {
+
+                        tabla.setBackgroundColor(Color.LTGRAY);
+                    }
+                    TextView tv1 = new TextView(context);
+                    tv1.setText(s1);
+                    tv1.setPadding(numColumnas, 1, numColumnas, 1);
+                    tabla.addView(tv1);
+
+                    TextView tv2 = new TextView(context);
+                    tv2.setText(s2);
+                    tv2.setPadding(numColumnas, 1, numColumnas, 1);
+                    tabla.addView(tv2);
+
+                    TextView tv3 = new TextView(context);
+                    tv3.setText(s3);
+                    tv3.setPadding(numColumnas, 1, numColumnas, 1);
+                    tabla.addView(tv3);
+
+                    TextView tv4 = new TextView(context);
+                    tv4.setText(s4);
+                    tv4.setPadding(numColumnas, 1, numColumnas, 1);
+                    tabla.addView(tv4);
+
+                    //dar color a las letras
+                    tv1.setTextColor(Color.BLACK);
+                    tv2.setTextColor(Color.BLACK);
+                    tv3.setTextColor(Color.BLACK);
+                    tv4.setTextColor(Color.BLACK);
+
+
+                    tablaBD.addView(tabla, new TableLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
+                            ActionBar.LayoutParams.MATCH_PARENT));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        private String convertStreamToString(InputStream in) {
+            int BUFFER_SIZE = 2000;
+            InputStreamReader isr = new InputStreamReader(in);
+            int charRead;
+            String str = "";
+            char[] inputBuffer = new char[BUFFER_SIZE];
+            try {
+                while ((charRead = isr.read(inputBuffer)) > 0) {
+                    String readString = String.copyValueOf(inputBuffer, 0, charRead);
+                    str += readString;
+                    inputBuffer = new char[BUFFER_SIZE];
+                }
+                in.close();
+            } catch (IOException e) {
+                // Handle Exception
+                e.printStackTrace();
+                return "";
+            }
+            return str;
+        }
+
+        public String Numcambiotiposangre(String tiposangre){
+            if(tiposangre.equals("1")){
+                tiposangre="A+";
+                return tiposangre;
+            }
+            else if(tiposangre.equals("2")){
+                tiposangre="A-";
+                return tiposangre;
+            }
+            else if(tiposangre.equals("3")){
+                tiposangre="B+";
+                return tiposangre;
+            }
+            else if(tiposangre.equals("4")){
+                tiposangre="B-";
+                return tiposangre;
+            }
+            else if(tiposangre.equals("5")){
+                tiposangre="AB+";
+                return tiposangre;
+            }
+            else if(tiposangre.equals("6")){
+                tiposangre="AB-";
+                return tiposangre;
+            }
+            else if(tiposangre.equals("7")){
+                tiposangre="O+";
+                return tiposangre;
+            }
+            else if(tiposangre.equals("8")){
+                tiposangre="O-";
+                return tiposangre;
+            }
+            return tiposangre;
+        }
+
+
+    }
 
 }

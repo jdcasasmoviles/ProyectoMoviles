@@ -1,11 +1,16 @@
 package com.jdcasas.appeldonante;
-
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -14,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -36,20 +42,27 @@ import cz.msebera.android.httpclient.client.HttpClient;
 import cz.msebera.android.httpclient.client.methods.HttpGet;
 import cz.msebera.android.httpclient.impl.client.DefaultHttpClient;
 
-public class RegistrarseActivity extends AppCompatActivity  implements AdapterView.OnItemSelectedListener{
+public class RegistrarseActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     Spinner sp_tipoSangre;
-    String dni="";
-    String nombres="";
-    String apellidos="";
-    String sexo="";
-    String tiposangre="";
-    String latitud="";
-    String longitud="";
-    String email="";
-    String telefono="";
-    String usuario="";
-    String password="";
-    String disponibilidad="";
+    String dni = "";
+    String nombres = "";
+    String apellidos = "";
+    String sexo = "";
+    String tiposangre = "";
+    String latitud = "";
+    String longitud = "";
+    String email = "";
+    String telefono = "";
+    String usuario = "";
+    String password = "";
+    String disponibilidad = "";
+    Button ButtonAutomatico;
+    private LocationManager locManager;
+    private LocationListener locListener;
+    private static final long MIN_DISTANCE = 5;
+    private static final long MIN_TIME = 10 * 10000; //10 segundos
+    private LocationManager mLocationManager;
+    private String mProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +72,68 @@ public class RegistrarseActivity extends AppCompatActivity  implements AdapterVi
         setSupportActionBar(toolbar);
         //SPINNER
         this.sp_tipoSangre = (Spinner) findViewById(R.id.sp_TipoDeSangre);
+        //boton auto coor
+        ButtonAutomatico = (Button) findViewById(R.id.ButtonAutomatico);
         loadSpinnertipoSangre();
+        //ACCION DE BOTON LOGIN
+        ButtonAutomatico.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Auto Coor.... ", Toast.LENGTH_LONG).show();
+                comenzarLocalizacion();
+            }
+        });
 
+    }
+
+    private void comenzarLocalizacion() {
+        locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        if (ActivityCompat.checkSelfPermission(RegistrarseActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        Location loc = locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        mostrarPosicion(loc);
+        locListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+                mostrarPosicion(location);
+            }
+
+            public void onProviderDisabled(String provider) {
+                Toast.makeText(getApplicationContext(), "Provider OFF", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            public void onProviderEnabled(String provider) {
+                Toast.makeText(getApplicationContext(), "Provider ON", Toast.LENGTH_LONG).show();
+            }
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+                Log.i("", "Provider Status: " + status);
+                Toast.makeText(getApplicationContext(), "Provider Status: " + status, Toast.LENGTH_LONG).show();
+
+            }
+        };
+
+//       locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 15000, 0, locListener);
+    }
+
+    private void mostrarPosicion(Location loc) {
+        double lat1=0;
+        double lng1=0;
+        EditText etLatitud = (EditText) findViewById(R.id.editTextCoorX);
+        EditText etLongitud = (EditText) findViewById(R.id.editTextCoorY);
+        if (loc != null) {
+            etLatitud.setText(String.valueOf(loc.getLatitude()));
+            etLongitud.setText(String.valueOf(loc.getLongitude()));
+            Log.i("", String.valueOf(loc.getLatitude() + " - " +
+                    String.valueOf(loc.getLongitude())));
+        } else {
+            etLatitud.setText("-12.017124");
+            etLongitud.setText("-77.050744");
+        }
     }
 
     public void botonReset(View view)
@@ -98,7 +171,19 @@ public class RegistrarseActivity extends AppCompatActivity  implements AdapterVi
         else{
             disponibilidad="N";
         }
-
+        System.out.println("dni "+dni+"\n" +
+                "dni "+dni+"\n" +
+                "nombres "+nombres+"\n" +
+                "apellidos "+apellidos+"\n" +
+                "sexo "+sexo+"\n" +
+                "tiposangre "+tiposangre+"\n" +
+                "latitud "+latitud+"\n" +
+                "longitud "+longitud+"\n" +
+                "email "+email+"\n" +
+                "telefono "+telefono+"\n" +
+                "usuario "+usuario+"\n" +
+                "password "+password+"\n"+
+                "disponibilidad "+disponibilidad+"\n");
         if(!dni.equals("")&& !nombres.equals("")&& !apellidos.equals("")&& !sexo.equals("")&& !tiposangre.equals("")&& !latitud.equals("")&& !longitud.equals("")&& !email.equals("")&& !telefono.equals("")&& !usuario.equals("")&& !password.equals("")&& !disponibilidad.equals("")){
             Toast.makeText(getApplicationContext(), "Conectando... ", Toast.LENGTH_LONG).show();
             //PARA LA CONEXION AL SERVIDOR
@@ -128,17 +213,19 @@ public class RegistrarseActivity extends AppCompatActivity  implements AdapterVi
     }
     public void rbSexo(View view)
     {
-        RadioButton rbMasculino=(RadioButton) findViewById(R.id.radioButtonM);
-        RadioButton rbFemenino=(RadioButton) findViewById(R.id.radioButtonF);
-        if(rbMasculino.isChecked()){
-             sexo="M";
-            rbFemenino.setChecked(false);
+        boolean marcado = ((RadioButton) view).isChecked();
+        switch (view.getId()) {
+            case R.id.radioButtonM:
+                if (marcado) {
+                    sexo="M";
+                }
+                break;
+            case R.id.radioButtonF:
+                if (marcado) {
+                    sexo="F";
+                }
+                break;
         }
-        else if(rbFemenino.isChecked()){
-             sexo="F";
-            rbMasculino.setChecked(false);
-        }
-
     }
 
         private void loadSpinnertipoSangre() {

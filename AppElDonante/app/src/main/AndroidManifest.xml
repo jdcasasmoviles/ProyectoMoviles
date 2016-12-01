@@ -1,36 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.jdcasas.appeldonante">
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
-    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
+    <permission
+        android:name="packageName.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-feature android:name="android.hardware.camera" android:required="false" />
-    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
+        android:name="android.support.multidex.MultiDexApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <uses-library
+            android:name="com.google.android.maps"
+            android:required="false" />
+
         <uses-permission android:name="android.permission.CALL_PHONE" />
-        <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+        <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
         <uses-permission android:name="android.permission.CAMERA" />
         <uses-permission android:name="android.permission.INTERNET" />
-        <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-        <uses-feature android:name="android.hardware.camera" android:required="false" />
+        <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
         <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+        <uses-feature
+            android:name="android.hardware.camera"
+            android:required="false" />
+
+        <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".inicio"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -39,6 +65,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".ConfiguracionActivity"
             android:label="@string/title_activity_configuracion"
@@ -72,34 +102,12 @@
             android:label="@string/title_activity_acercade"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".TransitionEditActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/title_activity_transition_edit"
-            android:parentActivityName=".SampleMaterialActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".SampleMaterialActivity" />
-        </activity>
-        <activity
-            android:name=".TransitionAddActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/title_activity_transition_add"
-            android:parentActivityName=".SampleMaterialActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".SampleMaterialActivity" />
-        </activity>
-        <activity
             android:name=".Main2Activity"
             android:label="@string/title_activity_main2"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".BuscarDonanteR"
             android:label="@string/title_activity_buscar_donante_r"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".Conversar"
-            android:label="@string/title_activity_conversar"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Disponibilidad"
@@ -110,13 +118,22 @@
             android:label="@string/title_activity_geolocalizar"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Mensaje"
-            android:label="@string/title_activity_mensaje"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".UsuarioSeleccionado"
             android:label="@string/title_activity_usuario_seleccionado"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MapaHospitalesDistrito"
+            android:label="@string/title_activity_mapa_hospitales_distrito"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MapaHospitalesID"
+            android:label="@string/title_activity_mapa_hospitales_id"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MapaUsuarioGps"
+            android:label="@string/title_activity_mapa_usuario_gps"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".MapaUsuariosTipoSangre"></activity>
     </application>
 
 </manifest>

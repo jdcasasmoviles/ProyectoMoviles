@@ -2,18 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:checked="true"
             android:id="@+id/item_navigation_inbox"
-            android:src="@drawable/donante2"
+            android:icon="@drawable/ic_action_toggle_star"
             android:title="Disponibilidad" />
         <item
             android:id="@+id/item_navigation_starred"
+			android:icon="@drawable/ic_action_content_send"
             android:title="Compatibilidad" />
         <item
             android:id="@+id/item_navigation_sent_mail"
+			android:icon="@drawable/ic_inbox_black_24dp"
             android:title="Hospitales" />
         <item
             android:id="@+id/item_navigation_settings"
+			android:icon="@drawable/ic_action_action_help"
             android:title="About" />
     </group>
 </menu>

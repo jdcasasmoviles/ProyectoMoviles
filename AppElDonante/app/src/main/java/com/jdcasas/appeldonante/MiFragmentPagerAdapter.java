@@ -9,7 +9,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 public class MiFragmentPagerAdapter extends FragmentPagerAdapter {
     final int PAGE_COUNT = 2;
     private String tabTitles[] =
-            new String[] { "Busqueda por distrito","Busqueda por nombre"};
+            new String[] { "Busqueda por distrito","Busqueda por id_hodpital"};
     public MiFragmentPagerAdapter(FragmentManager fm) {
         super(fm);
     }

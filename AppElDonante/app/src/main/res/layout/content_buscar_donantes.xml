@@ -11,26 +11,63 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.jdcasas.appeldonante.BuscarDonantesActivity"
     tools:showIn="@layout/activity_buscar_donantes">
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="25dp"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:clickable="true"
-        android:contentDescription="@string/fab"
-        android:elevation="6dp"
-        android:src="@android:drawable/ic_input_add"
-        android:transitionName="fab_transition"
-        android:tint="@android:color/white" />
+        android:weightSum="1"
+        android:id="@+id/linearLayout">
 
+        <Spinner
+            android:id="@+id/sp_TipoDeSangreBuscarDonante"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:prompt="@string/TipoDeSangre_prompt"
+            android:spinnerMode="dropdown"
+            android:layout_marginRight="6dip"
+            android:textSize="@dimen/formularioletra"
+            android:background="@drawable/rounded_corners_spiner"
+            android:layout_weight="0.5"
+            android:touchscreenBlocksFocus="true" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Buscar"
+            android:id="@+id/BuscarBuscarDonante"
+            android:background="@drawable/rounded_corners_registro"
+            android:layout_weight="0.5"
+            android:onClick="botonBuscarDonante" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:layout_below="@+id/linearLayout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/scrollView10"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/textView10" >
+
+            <HorizontalScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/horizontalScrollView5"
+                android:layout_alignBottom="@+id/scrollView10"
+                android:layout_toRightOf="@+id/scrollView10" >
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_above="@+id/scrollView10"
+                    android:id="@+id/tablaBDDonanteBuscarDonante">
+                </TableLayout>
+            </HorizontalScrollView>
+        </ScrollView>
+
+    </LinearLayout>
 </RelativeLayout>

@@ -6,10 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="@bool/fitsSystemWindows"
+    android:background="#ffffff"
     tools:context="com.jdcasas.appeldonante.UsuarioSeleccionado"
     tools:showIn="@layout/activity_usuario_seleccionado">
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,122 +19,105 @@
             android:background="?colorPrimary"/>
 
     </LinearLayout>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/status_bar_height">
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?actionBarSize"
+                    android:background="?attr/colorPrimary"
+                    android:elevation="4dp"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                    app:theme="@style/ToolbarTheme" />
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="167dp"
+                    android:weightSum="1">
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:weightSum="1">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/status_bar_height">
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:elevation="4dp"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:theme="@style/ToolbarTheme" />
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="167dp"
-            android:weightSum="1">
-              <LinearLayout
-                android:orientation="horizontal"
-              android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:weightSum="1">
-                  <ImageView
-                      android:layout_width="154dp"
-                      android:layout_height="88dp"
-                      android:id="@+id/imagenBuscarDonante"
-                      android:layout_marginTop="65dip"
-                      android:src="@drawable/q5"
-                      android:layout_weight="0.25" />
-                  <ImageView
-                      android:layout_width="154dp"
-                      android:layout_height="88dp"
-                      android:id="@+id/imageMensaje"
-                      android:layout_marginTop="65dip"
-                      android:src="@drawable/email"
-                      android:layout_weight="0.25" />
-                  <ImageView
-                      android:layout_width="154dp"
-                      android:layout_height="88dp"
-                      android:id="@+id/imageLlamar"
-                      android:layout_marginTop="65dip"
-                      android:src="@drawable/llamar"
-                      android:layout_weight="0.25" />
-                  <ImageView
-                      android:layout_width="154dp"
-                      android:layout_height="88dp"
-                      android:id="@+id/imageAbout"
-                      android:layout_marginTop="65dip"
-                      android:src="@drawable/about"
-                      android:layout_weight="0.25" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/TextViewBienvenido"
+                            android:layout_marginTop="65dip"
+                            android:text=""
+                            android:background="@drawable/rounded_corners_registro"
+                            android:layout_weight="1" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/TextViewBienvenidoinfo"
+                            android:text=""
+                            android:background="@drawable/rounded_corners_spiner"
+                            />
+                    </LinearLayout>
 
-              </LinearLayout>
+                </LinearLayout>
 
-        </LinearLayout>
+                <ImageView
+                    android:layout_width="111dp"
+                    android:layout_height="157dp"
+                    android:id="@+id/imageViewDisponibilidad"
+                    android:src="@drawable/android_pressed"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="left|bottom" />
 
-        <ImageView
-            android:layout_width="111dp"
-            android:layout_height="157dp"
-            android:id="@+id/imageViewDisponibilidad"
-            android:src="@drawable/android_pressed"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="left|bottom" />
+                <ImageView
+                    android:layout_width="117dp"
+                    android:layout_height="157dp"
+                    android:id="@+id/imagengpsUsuarios"
+                    android:src="@drawable/q6"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="right|bottom" />
 
-        <ImageView
-            android:layout_width="117dp"
-            android:layout_height="157dp"
-            android:id="@+id/imagengpsUsuarios"
-            android:src="@drawable/q6"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="right|bottom" />
+                <ImageView
+                    android:layout_width="111dp"
+                    android:layout_height="157dp"
+                    android:id="@+id/imagenHospitales"
+                    android:src="@drawable/q2"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal|bottom" />
 
-        <ImageView
-            android:layout_width="111dp"
-            android:layout_height="157dp"
-            android:id="@+id/imagenHospitales"
-            android:src="@drawable/q2"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center_horizontal|bottom" />
+                <TextView
+                    android:id="@+id/textViewLetraPersonal"
+                    android:layout_width="99dp"
+                    android:layout_height="129dp"
+                    android:gravity="center"
+                    android:text=""
+                    android:transitionName="initial_transition"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/initial_size"
+                    android:background="@drawable/rounded_corners_registro"
+                    android:layout_gravity="center" />
 
-        <TextView
-            android:id="@+id/textViewLetraPersonal"
-            android:layout_width="99dp"
-            android:layout_height="129dp"
-            android:gravity="center"
-            android:text=""
-            android:transitionName="initial_transition"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/initial_size"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            android:layout_gravity="center" />
+                <ImageView
+                    android:layout_width="111dp"
+                    android:layout_height="157dp"
+                    android:id="@+id/imagenBuscarDonante"
+                    android:src="@drawable/q5"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="left|center_vertical" />
 
-        <ImageView
-            android:layout_width="111dp"
-            android:layout_height="157dp"
-            android:id="@+id/imagenCompatibilidad"
-            android:src="@drawable/q4"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="left|center_vertical" />
-
-        <ImageView
-            android:layout_width="111dp"
-            android:layout_height="157dp"
-            android:id="@+id/imagengpsHospitales"
-            android:src="@drawable/hospital"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="right|center_vertical" />
-    </FrameLayout>
-
-
-
+                <ImageView
+                    android:layout_width="111dp"
+                    android:layout_height="157dp"
+                    android:id="@+id/imagengpsHospitales"
+                    android:src="@drawable/hospital"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="right|center_vertical" />
+            </FrameLayout>
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_view"
         android:layout_width="wrap_content"

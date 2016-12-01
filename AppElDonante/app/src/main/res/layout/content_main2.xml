@@ -8,6 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#ffffff"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.jdcasas.appeldonante.Main2Activity"
     tools:showIn="@layout/activity_main2">
@@ -16,7 +17,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/scrollView8" >
+        android:id="@+id/scrollViewMain2" >
 
         <LinearLayout
             android:orientation="vertical"
@@ -30,8 +31,8 @@
                 android:textSize="14dp"
                 android:id="@+id/TextViewTitulo"
                 android:layout_gravity="center_horizontal"
-                android:background="#ffffff"
-                android:textColor="#0b3be6" />
+                android:background="@drawable/rounded_corners_registro"
+                android:textColor="#ffffff" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -46,6 +47,18 @@
                     android:paddingRight="@dimen/activity_horizontal_margin"
                     android:paddingTop="@dimen/activity_vertical_margin"
                     android:layout_weight="0.5">
+
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fillViewport="true">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical" />
+                    </HorizontalScrollView>
+
                     <ImageView
                         android:src="@drawable/android3"
                         android:id="@+id/img"
@@ -97,21 +110,21 @@
                          android:layout_width="match_parent"
                          android:layout_height="wrap_content"
                          android:textSize="@dimen/formularioletra"
-                         android:background="#c8c4c4"
                          android:layout_gravity="center_horizontal"
                          android:id="@+id/boton1"
                          android:text="@string/boton1"
                          android:layout_marginBottom="15dip"
+                         android:background="@drawable/rounded_corners_spiner"
                          />
 
                      <Button
                          android:layout_width="match_parent"
                          android:layout_height="wrap_content"
                          android:textSize="@dimen/formularioletra"
-                         android:background="#c8c4c4"
                          android:layout_gravity="center_horizontal"
                          android:text="@string/boton2"
                          android:id="@+id/boton2"
+                         android:background="@drawable/rounded_corners_spiner"
                          android:layout_marginBottom="15dip"
                          />
                      <ImageView
@@ -122,16 +135,6 @@
                          android:layout_alignParentTop="true"
                          android:layout_centerHorizontal="true"
                          android:layout_gravity="center_horizontal" />
-                     <Button
-                         android:layout_width="match_parent"
-                         android:layout_height="wrap_content"
-                         android:textSize="@dimen/formularioletra"
-                         android:background="#c8c4c4"
-                         android:layout_gravity="center_horizontal"
-                         android:text="Notificar"
-                         android:id="@+id/buttonNotificar"
-                         />
-
 
                   </LinearLayout>
                 <LinearLayout
@@ -144,15 +147,6 @@
                     android:paddingTop="@dimen/activity_vertical_margin"
                     android:layout_weight="0.5"
                     android:weightSum="1">
-
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/formularioletra"
-                        android:background="#c8c4c4"
-                        android:layout_gravity="center_horizontal"
-                        android:text="Conversar"
-                        android:id="@+id/buttonConversar"
                          />
                     <AnalogClock
                         android:layout_width= "117dp"
@@ -164,20 +158,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/formularioletra"
-                        android:background="#c8c4c4"
-                        android:layout_gravity="center_horizontal"
-                        android:text="Mensaje"
-                        android:id="@+id/buttonMensaje"
-                        android:layout_marginBottom="15dip"
-                         />
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/formularioletra"
-                        android:background="#c8c4c4"
                         android:layout_gravity="center_horizontal"
                         android:text="GPS"
                         android:id="@+id/buttonGPS"
+                        android:background="@drawable/rounded_corners_spiner"
                          />
                 </LinearLayout>
               </LinearLayout>

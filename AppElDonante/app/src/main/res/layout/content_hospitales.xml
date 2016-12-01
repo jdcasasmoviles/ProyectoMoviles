@@ -10,8 +10,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.jdcasas.appeldonante.HospitalesActivity"
-    android:background="#e0dcdc"
+    android:background="#ffffff"
     tools:showIn="@layout/activity_hospitales">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollViewHospitales" >
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -21,14 +25,13 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="LISTAS DE HOSPITALES"
                 android:id="@+id/textView11"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
                 android:textColor="#ffffff"
-                android:background="#e20a0a"
                 android:textSize="20dp"
+                android:background="@drawable/rounded_corners"
                 android:gravity="center" />
             <ImageView
                 android:layout_width="178dp"
@@ -49,22 +52,32 @@
                     android:id="@+id/textViewDistritos"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Distrito  :   "
+                    android:text="Distrito "
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
                     android:textColor="#070303"
-                    android:textSize="20dp"
+                    android:textSize="15dp"
+                    android:layout_marginRight="6dip"
                     />
 
                 <Spinner
                     android:id="@+id/sp_distrito"
-                    android:layout_width="170dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:prompt="@string/distritos_prompt"
-                    android:background="#f5efef"
-                    android:spinnerMode="dialog"
-                    android:layout_weight="0.48" />
+                    android:spinnerMode="dropdown"
+                    android:layout_marginRight="6dip"
+                    android:background="@drawable/rounded_corners_spiner"
+                    />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Buscar"
+                    android:id="@+id/bBuscarTipoSangre"
+                    android:onClick="botonBuscarHospital"
+                    android:background="@drawable/rounded_corners_registro"
+                    android:theme="@style/MyButton"
+                    />
             </LinearLayout>
             <ScrollView
                 android:layout_width="match_parent"
@@ -88,6 +101,5 @@
                 </HorizontalScrollView>
             </ScrollView>
             </LinearLayout>
-
-
+    </ScrollView>
 </RelativeLayout>

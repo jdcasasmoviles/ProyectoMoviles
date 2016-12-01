@@ -3,7 +3,9 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="textViewRegistroColor">#27d910</color>
+    <color name="textViewRegistroColor">#0a1608</color>
+    <color name="color1">#9d0cc136</color>
+    <color name="color2">#e6e20d</color>
 
         <item name="blue" type="color">#2196f3</item>
         <item name="purple" type="color">#9c27b0</item>

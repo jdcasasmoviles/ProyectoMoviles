@@ -18,12 +18,26 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.jdcasas.appeldonante.library.Httppostaux;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
+
+import cz.msebera.android.httpclient.HttpEntity;
+import cz.msebera.android.httpclient.HttpResponse;
 import cz.msebera.android.httpclient.NameValuePair;
+import cz.msebera.android.httpclient.client.HttpClient;
+import cz.msebera.android.httpclient.client.methods.HttpGet;
+import cz.msebera.android.httpclient.impl.client.DefaultHttpClient;
 import cz.msebera.android.httpclient.message.BasicNameValuePair;
 
 public class LoginActivity extends AppCompatActivity {
@@ -95,8 +109,8 @@ public class LoginActivity extends AppCompatActivity {
 		    		postparameters2send.add(new BasicNameValuePair("password",password));
 
 		   //realizamos una peticion y como respuesta obtenes un array JSON
-      //  String IP_Server="192.168.1.14";
-	  String IP_Server="masterwishmaster.esy.es";//IP DE NUESTRO PC LOCALHOST
+      // String IP_Server="192.168.1.42";
+	 String IP_Server="masterwishmaster.esy.es";//IP DE NUESTRO PC LOCALHOST
         String URL_connect="http://"+IP_Server+"/Donante/acces.php";//ruta en donde estan nuestros archivos
         JSONArray jdata=post.getserverdata(postparameters2send, URL_connect);
 		    SystemClock.sleep(950);
@@ -191,17 +205,151 @@ public class LoginActivity extends AppCompatActivity {
                 toast1.show();
             }
            if (result.equals("ok")){
-			   Intent i=new Intent(LoginActivity.this, UsuarioSeleccionado.class);
-			   i.putExtra("usuario",user);
-			   System.out.println("Menu usuario");
-			   startActivity(i);
-
+               //PARA LA CONEXION AL SERVIDOR
+               conexionGet Conexion= null;
+               try {
+                   Conexion = new conexionGet();
+               } catch (JSONException e) {
+                   e.printStackTrace();
+               }
+               Conexion.execute(user);
             }else{
             	err_login();
             }
 		}
 		
         }
+
+    class conexionGet extends AsyncTask<String,Void,String> {
+        String respuestaServidor = "";
+
+        public conexionGet() throws JSONException {
+
+        }
+
+        protected String doInBackground(String... args) {
+            String usuario = (String) args[0];
+            BaseDatos medica = new BaseDatos(1);
+            String link = medica.buscarBDUsuario(usuario);
+            System.out.println("url..  :  " + link);
+            try {
+                URL url = new URL(link);
+                HttpClient client = new DefaultHttpClient();
+                HttpGet request = new HttpGet();
+                request.setURI(new URI(link));
+                HttpResponse response = client.execute(request);
+                if (response.getStatusLine().getStatusCode() == 200) {
+                    HttpEntity entity = response.getEntity();
+                    if (entity != null) {
+                        InputStream instream = entity.getContent();
+                        String result = convertStreamToString(instream);
+                        Log.d("result ****", String.valueOf((result)));
+                        //json.put("response_", new JSONObject(result));
+                        respuestaServidor=result;
+                        instream.close();
+                    }
+                } else {
+                    Log.d("result **** error", String.valueOf((0)));
+                }
+                return respuestaServidor;
+            } catch (Exception e) {
+                return new String("Exception: " + e.getMessage());
+            }
+
+        }
+
+        protected void onPostExecute(String result) {
+            try {
+                System.out.println("result : " + result);
+                JSONArray arrayBD =new JSONArray(result);
+                String s1="",s2="",s3="",s4="",s5="",s6="",s7="";
+                for (int i = 0; i < arrayBD.length(); i++) {
+                    JSONObject jsonChildNode = arrayBD.getJSONObject(i);
+                     s1 = jsonChildNode.optString("usuario");
+                     s2 = jsonChildNode.optString("telefono");
+                     s3 = jsonChildNode.optString("dni");
+                     s4 = jsonChildNode.optString("tiposangre");
+                    s4=Numcambiotiposangre(s4);
+                    s5 = jsonChildNode.optString("nombres");
+                    s6 = jsonChildNode.optString("apellidos");
+                    s7 = jsonChildNode.optString("email");
+                }
+                System.out.println("cadenasss : " + s1 + "---" + s2 + "---" + s3 + "---" + s4+ "---" + s5+ "---" + s6);
+                Intent i=new Intent(LoginActivity.this, UsuarioSeleccionado.class);
+                i.putExtra("usuario",s1);
+                i.putExtra("telefono",s2);
+                i.putExtra("dni",s3);
+                i.putExtra("tiposangre",s4);
+                i.putExtra("nombres",s5);
+                i.putExtra("apellidos",s6);
+                i.putExtra("email",s7);
+                System.out.println("Menu usuario");
+                startActivity(i);
+                finish();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        private String convertStreamToString(InputStream in) {
+            int BUFFER_SIZE = 2000;
+            InputStreamReader isr = new InputStreamReader(in);
+            int charRead;
+            String str = "";
+            char[] inputBuffer = new char[BUFFER_SIZE];
+            try {
+                while ((charRead = isr.read(inputBuffer)) > 0) {
+                    String readString = String.copyValueOf(inputBuffer, 0, charRead);
+                    str += readString;
+                    inputBuffer = new char[BUFFER_SIZE];
+                }
+                in.close();
+            } catch (IOException e) {
+                // Handle Exception
+                e.printStackTrace();
+                return "";
+            }
+            return str;
+        }
+
+        public String Numcambiotiposangre(String tiposangre){
+            if(tiposangre.equals("1")){
+                tiposangre="A+";
+                return tiposangre;
+            }
+            else if(tiposangre.equals("2")){
+                tiposangre="A-";
+                return tiposangre;
+            }
+            else if(tiposangre.equals("3")){
+                tiposangre="B+";
+                return tiposangre;
+            }
+            else if(tiposangre.equals("4")){
+                tiposangre="B-";
+                return tiposangre;
+            }
+            else if(tiposangre.equals("5")){
+                tiposangre="AB+";
+                return tiposangre;
+            }
+            else if(tiposangre.equals("6")){
+                tiposangre="AB-";
+                return tiposangre;
+            }
+            else if(tiposangre.equals("7")){
+                tiposangre="O+";
+                return tiposangre;
+            }
+            else if(tiposangre.equals("8")){
+                tiposangre="O-";
+                return tiposangre;
+            }
+            return tiposangre;
+        }
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

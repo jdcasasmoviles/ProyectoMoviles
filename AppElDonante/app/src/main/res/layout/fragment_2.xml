@@ -30,7 +30,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Direccion :"
+                    android:text="ID Hospital "
                     android:id="@+id/textViewUsuario"
                     android:textSize="17dp"
                     android:textColor="#2455d2" />
@@ -38,10 +38,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/editTextHospitalDireccion"
-                    android:textColor="#ffffff"
-                    android:background="#a9e2ef"
                     android:textSize="13dp"
                     android:text=""
+					android:inputType="number"
+                    android:theme="@style/MyEditText"
                     android:clickable="true" />
 
             </LinearLayout>
@@ -55,14 +55,14 @@
                 android:paddingTop="@dimen/activity_vertical_margin"
                 android:layout_weight="0.5">
                 <Button
-                    style="?android:attr/buttonStyleSmall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Buscar"
-                    android:id="@+id/bBuscarHospitalDireccion"
+                    android:id="@+id/bBuscarHospitalId"
                     android:textSize="@dimen/formularioletra"
-                    android:background="#c8c4c4"
                     android:layout_gravity="right"
+                    android:theme="@style/MyButton"
+                    android:background="@drawable/rounded_corners_registro"
                     />
             </LinearLayout>
         </LinearLayout>

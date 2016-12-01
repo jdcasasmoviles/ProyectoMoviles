@@ -11,7 +11,10 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.jdcasas.appeldonante.Disponibilidad"
     tools:showIn="@layout/activity_disponibilidad">
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollViewDisponibilidad" >
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -29,7 +32,7 @@
             android:textSize="18dp"
             android:id="@+id/textView0"
             android:layout_gravity="center_horizontal"
-            android:background="#0b3be6"
+            android:background="@drawable/rounded_corners_azul"
             android:textColor="#ffffff" />
         <ImageView
             android:src="@drawable/android3"
@@ -52,13 +55,15 @@
                 android:layout_height="wrap_content"
                 android:text="Disponible"
                 android:id="@+id/radioButton"
-                android:layout_gravity="left" />
+                android:layout_gravity="left"
+                android:onClick="onRadioButtonClicked" />
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="No Disponible"
                 android:id="@+id/radioButton2"
-                android:layout_gravity="left" />
+                android:layout_gravity="left"
+                android:onClick="onRadioButtonClicked" />
         </RadioGroup>
         <ImageView
             android:layout_width="111dp"
@@ -70,5 +75,5 @@
             android:layout_gravity="center_horizontal" />
 
     </LinearLayout>
-
+    </ScrollView>ScrollView>
 </RelativeLayout>

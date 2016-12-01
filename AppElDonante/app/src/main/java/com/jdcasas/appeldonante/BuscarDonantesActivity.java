@@ -1,133 +1,209 @@
 package com.jdcasas.appeldonante;
 
-import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URI;
+import java.net.URL;
+
+import cz.msebera.android.httpclient.HttpEntity;
+import cz.msebera.android.httpclient.HttpResponse;
+import cz.msebera.android.httpclient.client.HttpClient;
+import cz.msebera.android.httpclient.client.methods.HttpGet;
+import cz.msebera.android.httpclient.impl.client.DefaultHttpClient;
 
 public class BuscarDonantesActivity extends AppCompatActivity {
-    private static final String DEBUG_TAG = "AppCompatActivity";
-
-    public static final String EXTRA_UPDATE = "update";
-    public static final String EXTRA_DELETE = "delete";
-    public static final String EXTRA_NAME = "name";
-    public static final String EXTRA_COLOR = "color";
-    public static final String EXTRA_INITIAL = "initial";
-
-    public static final String TRANSITION_FAB = "fab_transition";
-    public static final String TRANSITION_INITIAL = "initial_transition";
-    public static final String TRANSITION_NAME = "name_transition";
-    public static final String TRANSITION_DELETE_BUTTON = "delete_button_transition";
-
-    private RecyclerView recyclerView;
-    private SampleMaterialAdapter adapter;
-    private ArrayList<Card> cardsList = new ArrayList<>();
-    private int[] colors;
-    private String[] names;
-
+    Spinner sp_tipoSangre;
+    Button buscar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buscar_donantes);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        names = getResources().getStringArray(R.array.names_array);
-        colors = getResources().getIntArray(R.array.initial_colors);
-
-        initCards();
-
-        if (adapter == null) {
-            adapter = new SampleMaterialAdapter(this, cardsList);
-        }
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-            @Override
-            public void onClick(View v) {
-                Pair<View, String> pair = Pair.create(v.findViewById(R.id.fab), TRANSITION_FAB);
-
-                ActivityOptionsCompat options;
-                Activity act = BuscarDonantesActivity.this;
-                options = ActivityOptionsCompat.makeSceneTransitionAnimation(act, pair);
-
-                Intent transitionIntent = new Intent(act, TransitionAddActivity.class);
-                act.startActivityForResult(transitionIntent, adapter.getItemCount(), options.toBundle());
+        //SPINNER
+        this.sp_tipoSangre = (Spinner) findViewById(R.id.sp_TipoDeSangreBuscarDonante);
+        loadSpinnertipoSangre();
+        buscar= (Button) findViewById(R.id.BuscarBuscarDonante);
+        //ACCION DE BOTON LOGIN
+        buscar.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Geolocalizando .... ", Toast.LENGTH_LONG).show();
+                //PARA LA CONEXION AL SERVIDOR
+               conexionGet Conexion= null;
+                try {
+                    Conexion = new conexionGet();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Conexion.execute(sp_tipoSangre.getItemAtPosition(sp_tipoSangre.getSelectedItemPosition()).toString());
             }
         });
+
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    private void loadSpinnertipoSangre() {
 
-        Log.d(DEBUG_TAG, "requestCode is " + requestCode);
-        // if adapter.getItemCount() is request code, that means we are adding a new position
-        // anything less than adapter.getItemCount() means we are editing a particular position
-        if (requestCode == adapter.getItemCount()) {
-            if (resultCode == RESULT_OK) {
-                // Make sure the Add request was successful
-                // if add name, insert name in list
-                String name = data.getStringExtra(EXTRA_NAME);
-                int color = data.getIntExtra(EXTRA_COLOR, 0);
-                adapter.addCard(name, color);
-            }
-        } else {
-            // Anything other than adapter.getItemCount() means editing a particular list item
-            // the requestCode is the list item position
-            if (resultCode == RESULT_OK) {
-                // Make sure the Update request was successful
-                RecyclerView.ViewHolder viewHolder = recyclerView.findViewHolderForAdapterPosition(requestCode);
-                if (data.getExtras().getBoolean(EXTRA_DELETE, false)) {
-                    // if delete user delete
-                    // The user deleted a contact
-                    adapter.deleteCard(viewHolder.itemView, requestCode);
-                } else if (data.getExtras().getBoolean(EXTRA_UPDATE)) {
-                    // if name changed, update user
-                    String name = data.getStringExtra(EXTRA_NAME);
-                    viewHolder.itemView.setVisibility(View.INVISIBLE);
-                    adapter.updateCard(name, requestCode);
+        // Create an ArrayAdapter using the string array and a default spinner
+        // layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this, R.array.array_tipoSangre, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        this.sp_tipoSangre.setAdapter(adapter);
+
+        // This activity implements the AdapterView.OnItemSelectedListener
+      //  this.sp_tipoSangre.setOnItemSelectedListener(this);
+    }
+
+    class conexionGet extends AsyncTask<String,Void,String> {
+        String respuestaServidor = "";
+        String tipodedangre="";
+        public conexionGet() throws JSONException {
+        }
+
+        protected String doInBackground(String... args) {
+            tipodedangre = (String) args[0];
+            BaseDatos medica = new BaseDatos(1);
+            String link = medica.buscartiposangreCoordenadad(tipodedangre);
+            System.out.println("url..  :  " + link);
+            try {
+                URL url = new URL(link);
+                HttpClient client = new DefaultHttpClient();
+                HttpGet request = new HttpGet();
+                request.setURI(new URI(link));
+                HttpResponse response = client.execute(request);
+                if (response.getStatusLine().getStatusCode() == 200) {
+                    HttpEntity entity = response.getEntity();
+                    if (entity != null) {
+                        InputStream instream = entity.getContent();
+                        String result = convertStreamToString(instream);
+                        Log.d("result ****", String.valueOf((result)));
+                        //json.put("response_", new JSONObject(result));
+                        respuestaServidor=result;
+                        instream.close();
+                    }
+                } else {
+                    Log.d("result **** error", String.valueOf((0)));
                 }
+                return respuestaServidor;
+            } catch (Exception e) {
+                return new String("Exception: " + e.getMessage());
+            }
+
+        }
+
+        protected void onPostExecute(String result) {
+            try {
+                System.out.println("result : " + result);
+                String cadenacoordenadas="";
+                JSONArray arrayBD =new JSONArray(result);
+                for (int i = 0; i < arrayBD.length(); i++) {
+                    JSONObject jsonChildNode = arrayBD.getJSONObject(i);
+                    String s1 = jsonChildNode.optString("latitud");
+                    String s2 = jsonChildNode.optString("longitud");
+                    String s3 = jsonChildNode.optString("tiposangre");
+                    s3=Numcambiotiposangre(s3);
+                    String s4 = jsonChildNode.optString("telefono");
+                    String s5 = jsonChildNode.optString("sexo");
+                    String s6 = jsonChildNode.optString("disponibilidad");
+                    cadenacoordenadas=cadenacoordenadas+s1+"*"+s2+"*"+s3+"\t"+s4+"*"+s5+s6+"*";
+                    System.out.println("cadenasss : " + s1 + "---" + s2 + "---"+s3);
+                }
+                System.out.println("\n\ncadenacoordenadas : " + cadenacoordenadas);
+                if(cadenacoordenadas.equals("")){
+                    Toast.makeText(getApplicationContext(), "El tipo sangre no esta en la BD", Toast.LENGTH_LONG).show();
+
+                } else{
+              Intent i = new Intent(BuscarDonantesActivity.this, MapaUsuariosTipoSangre.class);
+                i.putExtra("cadenacoordenadas",cadenacoordenadas);
+                startActivity(i);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         }
-    }
 
-    public void doSmoothScroll(int position) {
-        recyclerView.smoothScrollToPosition(position);
-    }
 
-    private void initCards() {
-        for (int i = 0; i < 50; i++) {
-            Card card = new Card();
-            card.setId((long) i);
-            card.setName(names[i]);
-            card.setColorResource(colors[i]);
-            Log.d(DEBUG_TAG, "Card created with id " + card.getId() + ", name " + card.getName() + ", color " + card.getColorResource());
-            cardsList.add(card);
+        private String convertStreamToString(InputStream in) {
+            int BUFFER_SIZE = 2000;
+            InputStreamReader isr = new InputStreamReader(in);
+            int charRead;
+            String str = "";
+            char[] inputBuffer = new char[BUFFER_SIZE];
+            try {
+                while ((charRead = isr.read(inputBuffer)) > 0) {
+                    String readString = String.copyValueOf(inputBuffer, 0, charRead);
+                    str += readString;
+                    inputBuffer = new char[BUFFER_SIZE];
+                }
+                in.close();
+            } catch (IOException e) {
+                // Handle Exception
+                e.printStackTrace();
+                return "";
+            }
+            return str;
         }
-    }
 
+        public String Numcambiotiposangre(String tiposangre){
+            if(tiposangre.equals("1")){
+                tiposangre="A+";
+                return tiposangre;
+            }
+            else if(tiposangre.equals("2")){
+                tiposangre="A-";
+                return tiposangre;
+            }
+            else if(tiposangre.equals("3")){
+                tiposangre="B+";
+                return tiposangre;
+            }
+            else if(tiposangre.equals("4")){
+                tiposangre="B-";
+                return tiposangre;
+            }
+            else if(tiposangre.equals("5")){
+                tiposangre="AB+";
+                return tiposangre;
+            }
+            else if(tiposangre.equals("6")){
+                tiposangre="AB-";
+                return tiposangre;
+            }
+            else if(tiposangre.equals("7")){
+                tiposangre="O+";
+                return tiposangre;
+            }
+            else if(tiposangre.equals("8")){
+                tiposangre="O-";
+                return tiposangre;
+            }
+            return tiposangre;
+        }
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -12,6 +12,10 @@
     tools:context="com.jdcasas.appeldonante.Geolocalizar"
     tools:showIn="@layout/activity_geolocalizar">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollViewGeolocalizar" >
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -42,10 +46,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/editTextBuscarTelefono"
-                android:textColor="#ffffff"
-                android:background="#a9e2ef"
+                android:textColor="#0e0404"
                 android:textSize="13dp"
+                android:inputType="phone"
                 android:text=""
+                android:theme="@style/MyEditText"
                 android:clickable="true" />
 
         </LinearLayout>
@@ -59,13 +64,12 @@
             android:paddingTop="@dimen/activity_vertical_margin"
             android:layout_weight="0.5">
             <Button
-                style="?android:attr/buttonStyleSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Buscar"
-                android:id="@+id/bBuscarHospitalDireccion"
+                android:id="@+id/bBuscarUsuarioTelefono"
                 android:textSize="@dimen/formularioletra"
-                android:background="#c8c4c4"
+                android:background="@drawable/rounded_corners_registro"
                 android:layout_gravity="right"
                 />
         </LinearLayout>
@@ -73,13 +77,12 @@
         <ImageView
             android:id="@+id/imageView"
             android:src="@drawable/geohsolo"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="336dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="15dip"
             android:layout_marginTop="15dip"
             />
     </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

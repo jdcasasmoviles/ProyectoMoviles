@@ -20,39 +20,39 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:weightSum="1">
-                <TextView
-                    android:id="@+id/textViewDistritos"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Distrito  :   "
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentLeft="true"
-                    android:textColor="#2455d2"
-                    android:textSize="20dp"
-                    android:layout_weight="0.5" />
-
-                <Spinner
+            <Spinner
                     android:id="@+id/sp_distrito"
-                    android:layout_width="170dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:prompt="@string/distritos_prompt"
                     android:textColor="#ffffff"
-                    android:background="#a9e2ef"
                     android:spinnerMode="dialog"
+                    android:backgroundTint="#ffffff"
+                    android:background="@drawable/rounded_corners_spiner"
                     android:layout_weight="0.5"
-                    android:backgroundTint="#ffffff" />
+                    android:layout_marginRight="6dip"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Buscar"
+                android:id="@+id/bBuscarHospitalDistrito"
+                android:textSize="@dimen/formularioletra"
+                android:background="@drawable/rounded_corners_registro"
+                android:layout_weight="0.5"
+                android:theme="@style/MyButton"
+                />
         </LinearLayout>
         <ImageView
+            android:id="@+id/imageViewhdb"
+            android:src="@drawable/geohd"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/imageView"
-            android:src="@drawable/geohd"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="15dip"
-            android:layout_marginTop="15dip"/>
+            android:layout_marginTop="15dip"
+            />
     </LinearLayout>
 </FrameLayout>
 
